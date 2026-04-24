@@ -1,0 +1,24 @@
+import React from 'react';
+import SectionTitle from '../../../components/ui/SectionTitle';
+import CategoryMenuItem from '../../../components/ui/CategoryMenuItem';
+import { CATEGORIES } from '../../../constants/homeData';
+
+export default function CategorySection({ activeCategoryType, onCategoryChange }) {
+  return (
+    <section className="px-layout-x mt-10">
+      <SectionTitle title="원하는 챌린지를 골라보세요!" className="mb-[20px]" />
+      {/* 화면 너비(최대 460px)에 맞춰 6개의 버튼을 남는 여백 없이 꽉 채우기 위해 다시 Grid 복귀 */}
+      <div className="grid grid-cols-6 gap-[14px] w-full pb-2">
+        {CATEGORIES.map((cat) => (
+          <CategoryMenuItem 
+            key={cat.id} 
+            label={cat.label} 
+            type={cat.type}
+            isActive={cat.type === activeCategoryType} 
+            onClick={() => onCategoryChange(cat.type)}
+          />
+        ))}
+      </div>
+    </section>
+  );
+}
