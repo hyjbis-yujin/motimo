@@ -8,6 +8,4 @@ import { create } from 'zustand';
 export const useUIStore = create((set) => ({
   isTabBarVisible: true,
   setTabBarVisible: (visible) => set({ isTabBarVisible: visible }),
-  
-  // 모달 등 추가 UI 상태가 필요하면 여기서 확장
 }));

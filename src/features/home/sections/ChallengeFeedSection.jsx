@@ -9,6 +9,8 @@ export default function ChallengeFeedSection({ cards, onLoadMore, onCollapse, ha
         <ChallengeCard
           key={item.id}
           variant="feed"
+          id={item.id}
+          imageUrl={item.imageUrl}
           title={item.title}
           desc={item.desc}
           badge={item.badge}

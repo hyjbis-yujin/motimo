@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 export default function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isComingSoon, setIsComingSoon] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = (e) => {
@@ -42,12 +43,38 @@ export default function LoginForm() {
       </form>
 
       {/* 보조 링크 */}
-      <div className="flex items-center justify-center gap-3 mt-6 text-[13px] text-text-secondary font-medium">
-        <button type="button" className="active:text-text-dark transition-colors">아이디 찾기</button>
-        <span className="text-[#e2e2e2] text-[10px]">|</span>
-        <button type="button" className="active:text-text-dark transition-colors">비밀번호 찾기</button>
-        <span className="text-[#e2e2e2] text-[10px]">|</span>
-        <button type="button" className="active:text-text-dark transition-colors">회원가입</button>
+      <div className="flex flex-col items-center mt-6">
+        <div className="flex items-center justify-center gap-3 text-[13px] text-text-secondary font-medium">
+          <button 
+            type="button" 
+            className="active:text-text-dark transition-colors"
+            onClick={() => setIsComingSoon(true)}
+          >
+            아이디 찾기
+          </button>
+          <span className="text-[#e2e2e2] text-[10px]">|</span>
+          <button 
+            type="button" 
+            className="active:text-text-dark transition-colors"
+            onClick={() => setIsComingSoon(true)}
+          >
+            비밀번호 찾기
+          </button>
+          <span className="text-[#e2e2e2] text-[10px]">|</span>
+          <button 
+            type="button" 
+            className="active:text-text-dark transition-colors"
+            onClick={() => setIsComingSoon(true)}
+          >
+            회원가입
+          </button>
+        </div>
+        
+        {isComingSoon && (
+          <p className="mt-4 text-[12px] text-primary-mint font-semibold animate-fade-in">
+            서비스를 준비 중입니다. 잠시만 기다려 주세요!
+          </p>
+        )}
       </div>
 
     </div>

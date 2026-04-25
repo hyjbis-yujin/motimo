@@ -1,17 +1,21 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { cn } from '../../utils/cn';
 import Badge from './Badge';
 import Icon from './Icon';
 
 export default function ChallengeCard({
   className,
+  id,
   title,
   desc,
   badge,
   participants,
   hasPoint,
+  imageUrl,
   variant = 'feed' // 'top-left', 'top-right', 'feed', 'popular'
 }) {
+  const navigate = useNavigate();
   const [isLiked, setIsLiked] = useState(false);
 
   const baseCardStyles = "relative flex flex-col justify-between rounded-[20px] overflow-hidden bg-[#e8e8e8] select-none group cursor-pointer shadow-[0_4px_16px_rgba(0,0,0,0.02)] tracking-tight";
@@ -32,14 +36,27 @@ export default function ChallengeCard({
     setIsLiked(!isLiked);
   };
 
+  const handleCardClick = () => {
+    if (id) {
+      navigate(`/challenge/${id}`);
+    } else {
+      // Fallback detail page
+      navigate(`/challenge/1`);
+    }
+  };
+
   const isTopVariant = variant === 'top-left' || variant === 'top-right';
 
   return (
-    <div className={cn(baseCardStyles, variantsStyles[variant], className)}>
-      <div className={bgPlaceholderClass}></div>
+    <div className={cn(baseCardStyles, variantsStyles[variant], className)} onClick={handleCardClick}>
+      {imageUrl ? (
+        <img src={imageUrl} alt="" className="absolute inset-0 w-full h-full object-cover select-none pointer-events-none" />
+      ) : (
+        <div className={bgPlaceholderClass}></div>
+      )}
 
-      {/* 자연스러운 오버레이 */}
-      <div className="absolute inset-0 bg-gradient-to-t from-[rgba(0,0,0,0.72)] via-black/20 to-[rgba(0,0,0,0.02)]"></div>
+      {/* 가독성을 위한 강화된 오버레이 */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent"></div>
 
       {/* Top Area: 좌상단 하트와 우상단 뱃지는 공통, 인원수 배치는 상단 전용(isTopVariant) */}
       <div className="relative z-10 w-full px-4 pt-4 flex justify-between items-start">

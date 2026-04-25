@@ -4,18 +4,15 @@ import MobileContainer from '../components/layout/MobileContainer';
 import HomePage from '../pages/HomePage';
 import MyPage from '../pages/MyPage';
 import ChallengeDetailPage from '../pages/ChallengeDetailPage';
-import WritePlaceholderPage from '../pages/WritePlaceholderPage';
 import LoginPage from '../pages/LoginPage';
+import NotificationPage from '../pages/NotificationPage';
+import SearchPage from '../pages/SearchPage';
 
 /**
  * 전역 레이아웃 래퍼
  */
 const AppLayout = () => {
-  return (
-    <MobileContainer>
-      <Outlet />
-    </MobileContainer>
-  );
+  return <Outlet />;
 };
 
 export const router = createBrowserRouter([
@@ -28,12 +25,12 @@ export const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: 'explore',
-        element: <div className="p-4 text-center text-text-muted mt-10">탐색 페이지 준비중</div>,
+        path: 'search',
+        element: <SearchPage />,
       },
       {
-        path: 'write',
-        element: <WritePlaceholderPage />,
+        path: 'notifications',
+        element: <NotificationPage />,
       },
       {
         path: 'my',

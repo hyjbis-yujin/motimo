@@ -5,6 +5,10 @@ import { cn } from '../../utils/cn';
 import headerLogo from '../../assets/icons/header-logo.svg';
 import headerSearch from '../../assets/icons/header-search.svg';
 import headerNotification from '../../assets/icons/header-notification.svg';
+import headerBack from '../../assets/icons/header-back.svg';
+
+import notifItem from '../../assets/icons/notif-item.svg';
+import notifItemActive from '../../assets/icons/notif-item-active.svg';
 
 import tabHome from '../../assets/icons/tab-home.svg';
 import tabHomeActive from '../../assets/icons/tab-home-active.svg';
@@ -21,6 +25,7 @@ import categoryReading from '../../assets/icons/category-reading.svg';
 import categoryEtc from '../../assets/icons/category-etc.svg';
 
 import actionBack from '../../assets/icons/action-back.svg';
+import actionClose from '../../assets/icons/action-close.svg';
 import actionHeart from '../../assets/icons/action-heart.svg';
 import actionHeartActive from '../../assets/icons/action-heart-active.svg';
 
@@ -39,6 +44,9 @@ const ICON_MAP = {
   'header-logo': headerLogo,
   'header-search': headerSearch,
   'header-notification': headerNotification,
+  'header-back': headerBack,
+  'notif-item': notifItem,
+  'notif-item-active': notifItemActive,
   
   // Tab Bar
   'tab-home': tabHome,
@@ -58,6 +66,7 @@ const ICON_MAP = {
   
   // Actions
   'action-back': actionBack,
+  'action-close': actionClose,
   'action-heart': actionHeart,
   'action-heart-active': actionHeartActive,
   'action-help': actionHelp,
@@ -79,10 +88,13 @@ const NATURAL_SIZES = {
   'header-logo': { w: 120, h: 20 },
   'header-search': { w: 20, h: 21 },
   'header-notification': { w: 19, h: 23 },
+  'header-back': { w: 24, h: 24 },
+  'notif-item': { w: 18, h: 18 },
   'tab-home': { w: 17, h: 20 },
   'tab-write': { w: 20, h: 20 },
   'tab-my': { w: 18, h: 20 },
   'action-back': { w: 14, h: 24 },
+  'action-close': { w: 7, h: 7 },
   'action-heart': { w: 19, h: 17 },
   'action-help': { w: 16, h: 16 },
   'status-participants': { w: 18, h: 13 },

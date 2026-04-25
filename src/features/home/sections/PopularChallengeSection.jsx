@@ -19,27 +19,18 @@ export default function PopularChallengeSection() {
 
       <HorizontalScrollRow>
         <div className="flex items-center gap-[14px] w-max">
-          {POPULAR_CHALLENGES.map((item, index) => {
-            // 노을/도시/러닝 느낌을 모방하기 위한 카드 배경색 톤다운 (placeholder 용)
-            const bgTones = [
-              "bg-[#8e9096]", // 러닝 톤
-              "bg-[#9c8273]", // 노을 톤
-              "bg-[#6c7886]"  // 새벽 도시 톤
-            ];
-
-            return (
-              <div key={item.id} className="relative rounded-[20px] overflow-hidden shadow-card-light">
-                <div className={`absolute inset-0 ${bgTones[index % 3]} mix-blend-multiply opacity-50`}></div>
-                <ChallengeCard
-                  variant="popular"
-                  title={item.title}
-                  desc={item.desc}
-                  badge={item.badge}
-                  participants={item.participants}
-                />
-              </div>
-            );
-          })}
+          {POPULAR_CHALLENGES.map((item) => (
+            <ChallengeCard
+              key={item.id}
+              variant="popular"
+              id={item.id}
+              imageUrl={item.imageUrl}
+              title={item.title}
+              desc={item.desc}
+              badge={item.badge}
+              participants={item.participants}
+            />
+          ))}
         </div>
       </HorizontalScrollRow>
     </section>

@@ -11,6 +11,8 @@ export default function TopChallengeCardsSection() {
       <div className="flex items-center gap-[14px]">
         <ChallengeCard 
           variant="top-left"
+          id={left.id}
+          imageUrl={left.imageUrl}
           title={left.title}
           desc={left.desc}
           badge={left.badge}
@@ -18,6 +20,8 @@ export default function TopChallengeCardsSection() {
         />
         <ChallengeCard 
           variant="top-right"
+          id={right.id}
+          imageUrl={right.imageUrl}
           title={right.title}
           desc={right.desc}
           badge={right.badge}

@@ -6,6 +6,7 @@ import CategorySection from '../../features/home/sections/CategorySection';
 import ChallengeFeedSection from '../../features/home/sections/ChallengeFeedSection';
 import PopularChallengeSection from '../../features/home/sections/PopularChallengeSection';
 import RecommendedChallengeSection from '../../features/home/sections/RecommendedChallengeSection';
+import MobileContainer from '../../components/layout/MobileContainer';
 import { FEED_CHALLENGES } from '../../constants/homeData';
 
 export default function HomePage() {
@@ -41,35 +42,37 @@ export default function HomePage() {
   const hasMore = visibleCount < filteredCards.length;
 
   return (
-    <div className="flex flex-col">
-      {/* 1. 프로필 / 참여 중 챌린지 영역 */}
-      <ProfileSummarySection />
-      
-      {/* 2. 상단 가로 카드 2개 */}
-      <TopChallengeCardsSection />
-      
-      {/* 3. 민트 배너 */}
-      <EventBannerSection />
-      
-      {/* 4. 카테고리 메뉴 6개 */}
-      <CategorySection 
-        activeCategoryType={selectedCategory} 
-        onCategoryChange={handleCategoryChange} 
-      />
-      
-      {/* 5. 세로형 챌린지 리스트 (필터링 + 더보기/접기) */}
-      <ChallengeFeedSection 
-        cards={visibleCards} 
-        onLoadMore={handleLoadMore}
-        onCollapse={handleCollapse}
-        hasMore={hasMore}
-      />
-      
-      {/* 6. 인기 챌린지 TOP 10 (가로 스크롤) */}
-      <PopularChallengeSection />
-      
-      {/* 7. 추천 챌린지 안내 + 추천 카드 */}
-      <RecommendedChallengeSection />
-    </div>
+    <MobileContainer>
+      <div className="flex flex-col">
+        {/* 1. 프로필 / 참여 중 챌린지 영역 */}
+        <ProfileSummarySection />
+        
+        {/* 2. 상단 가로 카드 2개 */}
+        <TopChallengeCardsSection />
+        
+        {/* 3. 민트 배너 */}
+        <EventBannerSection />
+        
+        {/* 4. 카테고리 메뉴 6개 */}
+        <CategorySection 
+          activeCategoryType={selectedCategory} 
+          onCategoryChange={handleCategoryChange} 
+        />
+        
+        {/* 5. 세로형 챌린지 리스트 (필터링 + 더보기/접기) */}
+        <ChallengeFeedSection 
+          cards={visibleCards} 
+          onLoadMore={handleLoadMore}
+          onCollapse={handleCollapse}
+          hasMore={hasMore}
+        />
+        
+        {/* 6. 인기 챌린지 TOP 10 (가로 스크롤) */}
+        <PopularChallengeSection />
+        
+        {/* 7. 추천 챌린지 안내 + 추천 카드 */}
+        <RecommendedChallengeSection />
+      </div>
+    </MobileContainer>
   );
 }

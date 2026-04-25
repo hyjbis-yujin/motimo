@@ -10,8 +10,15 @@ export default function Header() {
       </Link>
       <div className="flex items-center gap-[12px] mt-0.5">
         <div className="flex items-center gap-[20px]">
-          <Icon name="header-search" className="cursor-pointer hover:opacity-80 transition-opacity" />
-          <Icon name="header-notification" className="cursor-pointer hover:opacity-80 transition-opacity" />
+          <Link to="/search" className="outline-none">
+            <Icon name="header-search" className="cursor-pointer hover:opacity-80 transition-opacity" />
+          </Link>
+          
+          <Link to="/notifications" className="outline-none relative">
+            {/* Unread badge dot */}
+            <div className="absolute top-0 right-0 w-1.5 h-1.5 bg-primary-mint rounded-full"></div>
+            <Icon name="header-notification" className="cursor-pointer hover:opacity-80 transition-opacity" />
+          </Link>
         </div>
       </div>
     </header>

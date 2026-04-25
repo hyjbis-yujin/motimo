@@ -2,6 +2,7 @@ import React from 'react';
 import { cn } from '../../utils/cn';
 import Header from './Header';
 import TabBar from './TabBar';
+import { useUIStore } from '../../store/useUIStore';
 
 /**
  * 앱의 모바일 규격(460px)과 전역 레이아웃을 담당하는 컨테이너

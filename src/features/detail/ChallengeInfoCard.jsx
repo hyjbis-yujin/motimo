@@ -7,7 +7,7 @@ export default function ChallengeInfoCard({ info }) {
   return (
     <div className="mx-layout-x mb-8 py-6 px-[32px] bg-white border-[5px] border-[#f8f8f8] rounded-[24px]">
       {/* 1. 상단 정보 섹션 */}
-      <h3 className="text-[16px] font-bold text-text-dark mb-4">챌린지 설명</h3>
+      <h3 className="text-[16px] font-bold text-text-dark mb-4">참여정보</h3>
       <div className="flex flex-col gap-3 mb-6">
         <div className="flex items-center gap-3">
           <Icon name="status-capacity" />

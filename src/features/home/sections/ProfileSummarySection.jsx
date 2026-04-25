@@ -8,31 +8,34 @@ export default function ProfileSummarySection() {
   const navigate = useNavigate();
 
   return (
-    <section className="px-layout-x flex items-center justify-between mt-10 mb-4">
-      <div className="flex items-center gap-[16px]">
-        {/* 그라데이션 프로필 테두리 (중첩 구조로 복구 - 선 굵기 4px로 상향) */}
-        <div className="flex-shrink-0 w-[82.4px] h-[82.4px] p-[4px] bg-gradient-to-br from-[#17C99F] to-[#60C6C9] rounded-[34px] flex items-center justify-center">
-          <div className="w-full h-full bg-bg-app rounded-[31px] flex items-center justify-center p-[2.2px]">
-            <div className="relative w-[70px] h-[70px] rounded-[28px] flex items-center justify-center bg-white shadow-[0_2px_10px_rgba(0,0,0,0.05)] overflow-hidden">
-               <Icon name="tab-my-active" className="w-[48px] h-[48px] opacity-20" />
-            </div>
-          </div>
+    <section className="px-layout-x mt-8 mb-4">
+      {/* 로그인 유도 카드형 컨테이너 */}
+      <div className="bg-[#fcfcfc] rounded-[28px] p-[20px] flex items-center gap-[18px] border border-[#f3f3f3] shadow-[0_4px_24px_rgba(0,0,0,0.02)]">
+        
+        {/* 1. 프로필 아이콘 (가독성 보강된 박스형 프로필) */}
+        <div className="flex-shrink-0 w-[60px] h-[60px] rounded-[22px] bg-white border border-[#eeeeee] flex items-center justify-center shadow-[inset_0_1px_4px_rgba(0,0,0,0.02)]">
+          <Icon name="tab-my-active" className="w-[30px] h-[30px] opacity-25" />
         </div>
 
-        {/* 중앙 텍스트 영역 */}
-        <div className="flex flex-col tracking-tight">
-          <div className="text-[16px] font-medium text-text-dark">{USER_INFO.name}님의</div>
-          <div className="text-[16px] font-bold text-text-dark leading-tight mt-0.5">참여 중인 챌린지</div>
-          <div className="text-[14px] font-semibold text-primary-mint mt-2">
-            현재 {USER_INFO.challengesCount}개의 챌린지로 진행 중이에요!
-          </div>
+        {/* 2. 중앙 텍스트 영역 (시계성 상향) */}
+        <div className="flex flex-col flex-1 min-w-0">
+          <h3 className="text-[16px] font-bold text-text-dark leading-tight tracking-tight">
+            로그인이 필요해요
+          </h3>
+          <p className="text-[12.5px] text-text-secondary font-medium tracking-tight mt-1 line-clamp-1">
+            나만의 습관과 챌린지를 시작해보세요
+          </p>
         </div>
+
+        {/* 3. 우측 버튼 (텍스트 길이에 맞는 중간 사이즈) */}
+        <Button 
+          variant="small" 
+          className="shrink-0 px-4 h-[36px] bg-btn-dark rounded-[12px] text-[13px]" 
+          onClick={() => navigate('/login')}
+        >
+          시작하기
+        </Button>
       </div>
-
-      {/* 우측 버튼 */}
-      <Button variant="pill" className="shrink-0 mt-2" onClick={() => navigate('/my')}>
-        모두보기
-      </Button>
     </section>
   );
 }
