@@ -1,22 +1,31 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import MobileContainer from '../components/layout/MobileContainer';
-import Icon from '../components/ui/Icon';
-import { cn } from '../utils/cn';
-import { NOTIFICATIONS } from '../constants/notificationData';
+import MobileContainer from '../../components/layout/MobileContainer';
+import Icon from '../../components/ui/Icon';
+import EmptyState from '../../components/ui/EmptyState';
+import { cn } from '../../utils/cn';
+import { useAuthStore } from '../../store/useAuthStore';
+import { useNotificationStore } from '../../store/useNotificationStore';
 
+const EMPTY_ARRAY = [];
+
+/**
+ * 알림 페이지 메인 컴포넌트
+ */
 export default function NotificationPage() {
   const navigate = useNavigate();
+  const isLoggedIn = useAuthStore(state => state.isLoggedIn);
+  const notifications = useNotificationStore(state => state.notifications || EMPTY_ARRAY);
 
   return (
     <MobileContainer
       showHeader={false}
       showTabBar={true}
-      className="bg-[#fcfcfc]" // 배경 톤 소폭 상향
-      mainClassName="pt-0 pb-10"
+      className="bg-[#fcfcfc]"
+      mainClassName="pt-0 pb-10 flex flex-col"
     >
-      {/* 1. Header (독립 서브페이지 스타일) */}
-      <header className="sticky top-0 z-30 bg-white h-[64px] flex items-center px-layout-x border-none shadow-none">
+      {/* 1. Header (독립 서브페이지 형태) */}
+      <header className="sticky top-0 z-30 bg-white h-header flex items-center px-layout-x border-none shadow-none flex-shrink-0">
         <button
           onClick={() => navigate(-1)}
           className="p-2 -ml-2 text-text-dark active:opacity-50 transition-opacity cursor-pointer"
@@ -30,13 +39,31 @@ export default function NotificationPage() {
       </header>
 
       {/* 2. Notification List */}
-      <div className="px-layout-x pt-6 flex flex-col gap-4">
-        {NOTIFICATIONS.length > 0 ? (
-          NOTIFICATIONS.map((notif) => (
+      <div className={cn(
+        "px-layout-x pt-6 flex flex-col gap-4",
+        (!isLoggedIn || notifications.length === 0) ? "flex-1" : ""
+      )}>
+        {!isLoggedIn ? (
+          /* 로그인 전 빈 상태 - 공통 컴포넌트 적용 */
+          <EmptyState 
+            title="로그인이 필요해요"
+            description="로그인 후 알림을 확인할 수 있어요."
+            actionLabel="로그인하러 가기"
+            actionTo="/login"
+            className="flex-1 pb-20"
+          />
+        ) : notifications.length > 0 ? (
+          /* 로그인 후 리스트 */
+          notifications.map((notif) => (
             <NotificationCard key={notif.id} notif={notif} />
           ))
         ) : (
-          <EmptyNotifications />
+          /* 데이터 없을 시 - 공통 컴포넌트 적용 */
+          <EmptyState 
+            title="알림창이 비어있어요"
+            description={`중요한 소식이나 새로운 챌린지 알림을\n가장 먼저 보내드릴게요`}
+            className="flex-1 pb-20"
+          />
         )}
       </div>
     </MobileContainer>
@@ -44,12 +71,15 @@ export default function NotificationPage() {
 }
 
 function NotificationCard({ notif }) {
+  const markAsRead = useNotificationStore(state => state.markAsRead);
+
   return (
     <div
       className={cn(
-        "bg-white rounded-[18px] py-6 px-5 flex gap-4 transition-all active:scale-[0.98] shadow-[0_2px_16px_rgba(0,0,0,0.03)]",
+        "bg-white rounded-recommend py-6 px-5 flex gap-4 transition-all active:scale-[0.98] shadow-card-subtle cursor-pointer",
         notif.isUnread ? "" : ""
       )}
+      onClick={() => markAsRead(notif.id)}
     >
       {/* 좌측: 아이콘 영역 */}
       <div className="flex-shrink-0">
@@ -85,20 +115,6 @@ function NotificationCard({ notif }) {
           {notif.message}
         </p>
       </div>
-    </div>
-  );
-}
-
-function EmptyNotifications() {
-  return (
-    <div className="flex-1 flex flex-col items-center justify-center pt-24 text-center px-10">
-      <div className="w-[100px] h-[100px] bg-white rounded-[40px] flex items-center justify-center mb-8 border border-[#f0f0f0]">
-        <Icon name="notif-item" className="w-[36px] h-[36px] opacity-10" />
-      </div>
-      <h3 className="text-[18px] font-bold text-text-dark mb-2">알림함이 비어있어요</h3>
-      <p className="text-[14px] text-text-muted leading-relaxed">
-        중요한 소식이나 새로운 챌린지 알림을<br />가장 먼저 보내드려요.
-      </p>
     </div>
   );
 }

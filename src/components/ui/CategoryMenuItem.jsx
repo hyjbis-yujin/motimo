@@ -12,8 +12,8 @@ export default function CategoryMenuItem({ label, type, isActive, onClick }) {
         className={cn(
           "w-full aspect-square rounded-[15px] flex items-center justify-center transition-all shadow-[0_1px_4px_rgba(0,0,0,0.015)]",
           isActive
-            ? "bg-white border-[2px] border-primary-mint shadow-[0_2px_8px_rgba(41,216,181,0.15)]"
-            : "bg-[#f8f8f8] border-none group-hover:bg-[#f2f2f2]"
+            ? "bg-white border-[2px] border-primary-mint shadow-[0_2px_8px_rgba(61,185,175,0.15)]"
+            : "bg-bg-subtle border-none group-hover:bg-[#f2f2f2]"
         )}
       >
         <Icon 

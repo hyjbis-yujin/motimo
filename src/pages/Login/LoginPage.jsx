@@ -1,9 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import MobileContainer from '../components/layout/MobileContainer';
-import LoginForm from '../features/auth/LoginForm';
-import Icon from '../components/ui/Icon';
+import MobileContainer from '../../components/layout/MobileContainer';
+import LoginForm from '../../features/auth/LoginForm';
+import Icon from '../../components/ui/Icon';
 
+/**
+ * 로그인 페이지 메인 컴포넌트
+ */
 export default function LoginPage() {
   return (
     <MobileContainer 
@@ -22,11 +25,11 @@ export default function LoginPage() {
             오늘의 챌린지를 시작해볼까요?
           </h1>
           <p className="text-[14px] text-text-secondary font-medium tracking-tight text-center">
-            로그인하고 나만의 습관을 이어가세요.
+            로그인하고 나만의 일상을 열어가보세요
           </p>
         </div>
 
-        {/* 폼 및 간편로그인 영역 */}
+        {/* 폼 영역 */}
         <div className="w-full max-w-[340px]">
           <LoginForm />
         </div>

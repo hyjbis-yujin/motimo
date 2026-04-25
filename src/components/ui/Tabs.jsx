@@ -3,9 +3,6 @@ import { cn } from '../../utils/cn';
 
 /**
  * 탭 메뉴 컴포넌트
- * @param {Object} props
- * @param {boolean} props.isStatic - 애니메이션 및 트랜지션 제거 여부
- * @param {boolean} props.hideBaselineFullWidth - 바닥 선을 전체 너비가 아닌 컨텐츠 영역으로 제한
  */
 export default function Tabs({ tabs, activeTab, onTabChange, isStatic = false, hideBaselineFullWidth = false }) {
   return (
@@ -27,7 +24,7 @@ export default function Tabs({ tabs, activeTab, onTabChange, isStatic = false, h
               )}>
                 {tab}
               </span>
-              {/* 활성 탭 언더라인 */}
+              {/* 활성 시 언더라인 */}
               <div className={cn(
                 "w-full h-[3px] mt-[15px] rounded-full",
                 !isStatic && "transition-all",

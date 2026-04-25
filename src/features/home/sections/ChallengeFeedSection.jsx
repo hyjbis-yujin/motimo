@@ -23,7 +23,7 @@ export default function ChallengeFeedSection({ cards, onLoadMore, onCollapse, ha
         className="w-full h-[48px] mt-[16px] mb-[48px]"
         onClick={hasMore ? onLoadMore : onCollapse}
       >
-        {hasMore ? "더 많은 챌린지 탐색하기 +" : "챌린지 목록 접기 -"}
+        {hasMore ? "더 많은 챌린지 검색하기 +" : "챌린지 목록 접기 -"}
       </Button>
     </section>
   );

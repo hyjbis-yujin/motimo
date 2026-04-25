@@ -1,12 +1,12 @@
 /**
- * 알림 페이지용 목업 데이터
+ * 알림 페이지의 목업 데이터
  */
 export const NOTIFICATIONS = [
   {
     id: 1,
     type: 'alert',
     title: '챌린지 시작 안내',
-    message: '내일 아침 6시 러닝 챌린지가 시작됩니다! 준비되셨나요?',
+    message: '내일 아침 6시 러닝 챌린지가 시작됩니다. 준비되셨나요?',
     time: '2시간 전',
     isUnread: true,
   },

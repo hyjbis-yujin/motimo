@@ -1,18 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import MobileContainer from '../components/layout/MobileContainer';
-import Icon from '../components/ui/Icon';
-import ChallengeCard from '../components/ui/ChallengeCard';
-import { cn } from '../utils/cn';
-import { RECOMMENDED_KEYWORDS, INITIAL_RECENT_SEARCHES } from '../constants/searchData';
-import { FEED_CHALLENGES } from '../constants/homeData';
+import MobileContainer from '../../components/layout/MobileContainer';
+import Icon from '../../components/ui/Icon';
+import ChallengeCard from '../../components/ui/ChallengeCard';
+import { cn } from '../../utils/cn';
+import { FEED_CHALLENGES } from '../../data/homeData';
+import { RECOMMENDED_KEYWORDS } from '../../data/searchData';
+import { useSearchStore } from '../../store/useSearchStore';
 
+const EMPTY_ARRAY = [];
+
+/**
+ * 검색 페이지 메인 컴포넌트
+ */
 export default function SearchPage() {
   const navigate = useNavigate();
   const [query, setQuery] = useState('');
-  const [recentSearches, setRecentSearches] = useState(INITIAL_RECENT_SEARCHES);
   const [searchResults, setSearchResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
+
+  // 셀렉터를 사용하여 무한 루프 방지
+  const recentSearches = useSearchStore(state => state.recentSearches || EMPTY_ARRAY);
+  const { addSearch, removeSearch, clearAll } = useSearchStore();
 
   // 검색 로직
   useEffect(() => {
@@ -31,27 +40,13 @@ export default function SearchPage() {
 
   const handleSearchSubmit = (e) => {
     if (e.key === 'Enter' && query.trim()) {
-      addRecentSearch(query.trim());
+      addSearch(query.trim());
     }
-  };
-
-  const addRecentSearch = (term) => {
-    if (!recentSearches.includes(term)) {
-      setRecentSearches([term, ...recentSearches.slice(0, 9)]);
-    }
-  };
-
-  const removeRecentSearch = (term) => {
-    setRecentSearches(recentSearches.filter(t => t !== term));
-  };
-
-  const clearAllRecent = () => {
-    setRecentSearches([]);
   };
 
   const handleTagClick = (term) => {
     setQuery(term);
-    addRecentSearch(term);
+    addSearch(term);
   };
 
   return (
@@ -61,7 +56,7 @@ export default function SearchPage() {
       mainClassName="pt-0 pb-28"
     >
       {/* 1. Search Header */}
-      <header className="sticky top-0 z-30 bg-white h-[64px] flex items-center px-layout-x gap-3 border-none">
+      <header className="sticky top-0 z-30 bg-white h-header flex items-center px-layout-x gap-3">
         <button
           onClick={() => navigate(-1)}
           className="p-1 -ml-1 text-text-dark cursor-pointer transition-opacity active:opacity-50"
@@ -78,7 +73,7 @@ export default function SearchPage() {
           <input
             type="text"
             placeholder="검색어를 입력해주세요."
-            className="w-full h-[46px] bg-[#f8f8f8] rounded-full pl-11 pr-10 text-[14px] text-text-dark border-none outline-none focus:bg-[#f6f6f6] transition-all placeholder:text-[#a4a4a4]"
+            className="w-full h-[46px] bg-bg-subtle rounded-full pl-11 pr-10 text-[14px] text-text-dark border-none outline-none focus:bg-[#f6f6f6] transition-all placeholder:text-[#a4a4a4]"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={handleSearchSubmit}
@@ -103,29 +98,34 @@ export default function SearchPage() {
           /* A. 기본 상태: 최근/추천 검색어 및 추천 챌린지 */
           <div className="flex flex-col gap-9 animate-fade-in text-[14px]">
             {/* 1) 최근 검색어 */}
-            {recentSearches.length > 0 && (
-              <section className="flex flex-col gap-3.5">
-                <div className="flex justify-between items-center">
-                  <h3 className="text-[15px] font-bold text-text-dark">최근검색어</h3>
+            <section className="flex flex-col gap-3.5">
+              <div className="flex justify-between items-center">
+                <h3 className="text-[15px] font-bold text-text-dark">최근검색어</h3>
+                {recentSearches.length > 0 && (
                   <button
-                    onClick={clearAllRecent}
+                    onClick={clearAll}
                     className="text-[12px] text-text-muted font-medium py-1 px-1 hover:text-text-secondary"
                   >
                     전체삭제
                   </button>
-                </div>
+                )}
+              </div>
+              
+              {recentSearches.length > 0 ? (
                 <div className="flex flex-wrap gap-2">
                   {recentSearches.map(term => (
                     <SearchTag
                       key={term}
                       label={term}
-                      onDelete={() => removeRecentSearch(term)}
+                      onDelete={() => removeSearch(term)}
                       onClick={() => handleTagClick(term)}
                     />
                   ))}
                 </div>
-              </section>
-            )}
+              ) : (
+                <p className="text-[13px] text-text-muted py-2">최근 검색한 내용이 없어요.</p>
+              )}
+            </section>
 
             {/* 2) 추천 검색어 */}
             <section className="flex flex-col gap-3.5">
@@ -162,7 +162,7 @@ export default function SearchPage() {
             </section>
           </div>
         ) : (
-          /* B. 검색 중: 결과 리스트 */
+          /* B. 검색 결과 리스트 */
           <div className="animate-fade-in">
             {searchResults.length > 0 ? (
               <div className="flex flex-col gap-6">
@@ -200,7 +200,7 @@ function SearchTag({ label, onDelete, onClick, variant = 'recent' }) {
       className={cn(
         "h-[38px] px-[16px] rounded-full flex items-center gap-1.5 cursor-pointer transition-all active:scale-95 text-[13px] font-medium border",
         variant === 'recommended'
-          ? "bg-[#eef8f6] text-[#00be91] border-transparent"
+          ? "bg-primary-light text-primary-mint border-transparent"
           : "bg-transparent border-[#e9e9e9] text-text-secondary"
       )}
       onClick={onClick}
@@ -224,12 +224,12 @@ function SearchTag({ label, onDelete, onClick, variant = 'recent' }) {
 function EmptyResults() {
   return (
     <div className="flex flex-col items-center justify-center pt-24 text-center px-10">
-      <div className="w-[80px] h-[80px] bg-[#f9f9f9] rounded-[30px] flex items-center justify-center mb-6">
+      <div className="w-[80px] h-[80px] bg-bg-subtle rounded-[30px] flex items-center justify-center mb-6">
         <Icon name="header-search" className="w-[32px] h-[32px] opacity-10" />
       </div>
       <h3 className="text-[17px] font-bold text-text-dark mb-2">검색 결과가 없어요</h3>
       <p className="text-[14px] text-text-muted leading-relaxed">
-        다른 검색어나 비슷한 키워드를<br />입력해 보시는 건 어떨까요?
+        다른 검색어나 비슷한 키워드로<br />입력해 보시는 건 어떨까요?
       </p>
     </div>
   );

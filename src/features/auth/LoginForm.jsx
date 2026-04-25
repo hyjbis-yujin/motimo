@@ -1,17 +1,25 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { useAuthStore } from '../../store/useAuthStore';
 
 export default function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isComingSoon, setIsComingSoon] = useState(false);
+  
   const navigate = useNavigate();
+  const location = useLocation();
+  const login = useAuthStore(state => state.login);
 
   const handleLogin = (e) => {
     e.preventDefault();
-    console.log("Logged in with:", email, password);
-    // TODO: 실제 API 연동 시 아래 로직 교체
-    navigate('/');
+    
+    if (email.trim() && password.trim()) {
+      login({ name: '한유진', email });
+      
+      const from = location.state?.from || '/';
+      navigate(from, { replace: true });
+    }
   };
 
   return (
@@ -36,7 +44,7 @@ export default function LoginForm() {
 
         <button 
           type="submit" 
-          className="w-full h-[56px] mt-2 bg-primary-mint text-white text-[16px] font-bold rounded-[16px] active:bg-[#14b38d] transition-colors"
+          className="w-full h-[56px] mt-2 bg-primary-mint text-white text-[16px] font-bold rounded-[16px] active:bg-primary-dark transition-colors"
         >
           로그인
         </button>
@@ -72,7 +80,7 @@ export default function LoginForm() {
         
         {isComingSoon && (
           <p className="mt-4 text-[12px] text-primary-mint font-semibold animate-fade-in">
-            서비스를 준비 중입니다. 잠시만 기다려 주세요!
+            서비스 준비 중입니다. 잠시만 기다려주세요.
           </p>
         )}
       </div>

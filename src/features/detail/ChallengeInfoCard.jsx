@@ -1,11 +1,14 @@
+import React from 'react';
 import Icon from '../../components/ui/Icon';
 
 /**
- * 챌린지의 정원, 기간, 상세 본문을 포함하는 정보 카드 (디자인 정밀 수정 반영)
+ * 챌린지의 정원, 기간, 상세 본문을 포함하는 정보 카드
  */
 export default function ChallengeInfoCard({ info }) {
+  if (!info) return null;
+
   return (
-    <div className="mx-layout-x mb-8 py-6 px-[32px] bg-white border-[5px] border-[#f8f8f8] rounded-[24px]">
+    <div className="mx-layout-x mb-8 py-6 px-[32px] bg-white border-[5px] border-bg-subtle rounded-[24px]">
       {/* 1. 상단 정보 섹션 */}
       <h3 className="text-[16px] font-bold text-text-dark mb-4">참여정보</h3>
       <div className="flex flex-col gap-3 mb-6">

@@ -8,8 +8,8 @@ export const MY_CHALLENGE_TABS = ["참여챌린지", "완료챌린지", "찜한 
 export const MY_CHALLENGE_LIST = [
   {
     id: 'm1',
-    title: '퇴근 후 스터디 1시간 하실 분',
-    desc: '매일 출석하셔야 합니다 !',
+    title: '퇴근 후 홈트 1시간 실천🏃‍♂️',
+    desc: '매일 출석하셔야 합니다!',
     badge: 'D-12',
     participants: '8/10',
     category: 'study'
@@ -26,7 +26,7 @@ export const MY_CHALLENGE_LIST = [
     id: 'm3',
     title: '매일 물 2L 마시기',
     desc: '건강해지는 가장 쉬운 방법',
-    badge: '∞',
+    badge: '인기',
     participants: '12/50',
     category: 'habit'
   }

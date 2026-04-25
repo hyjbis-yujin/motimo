@@ -1,14 +1,14 @@
 import React from 'react';
 import SectionTitle from '../../../components/ui/SectionTitle';
 import ChallengeCard from '../../../components/ui/ChallengeCard';
-import { POPULAR_CHALLENGES } from '../../../constants/homeData';
+import { POPULAR_CHALLENGES } from '../../../data/homeData';
 import HorizontalScrollRow from '../../../components/ui/HorizontalScrollRow';
 
 export default function PopularChallengeSection() {
   return (
     <section>
-      {/* 아주 연한 구분 영역 (높이 11px로 수정) */}
-      <div className="w-full h-[11px] bg-[#fbfbfb] shadow-[inset_0_1px_8px_rgba(0,0,0,0.04)]" />
+      {/* 섹션 간 구분 영역 */}
+      <div className="w-full h-[11px] bg-[#fbfbfb] shadow-inner" />
 
       <div className="px-layout-x mb-[24px] mt-10">
         <SectionTitle 

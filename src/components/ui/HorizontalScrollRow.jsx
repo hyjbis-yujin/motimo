@@ -3,8 +3,8 @@ import { cn } from '../../utils/cn';
 import useSimpleHorizontalDrag from '../../hooks/useSimpleHorizontalDrag';
 
 /**
- * 전역 공통 가로 스크롤 행 컴포넌트
- * 마우스 드래그, 휠 이벤트를 지원하며 커스텀 스크롤바를 별도 제공합니다.
+ * 전역 공통 가로 스크롤 컴포넌트
+ * 마우스 드래그 이벤트를 지원하며 커스텀 스크롤바를 별도 제공합니다.
  */
 export default function HorizontalScrollRow({ children, className, contentClassName }) {
   const { 
@@ -45,14 +45,14 @@ export default function HorizontalScrollRow({ children, className, contentClassN
     });
     
     observer.observe(el);
-    // 내부에 카드가 추가될 수 있으므로 자식 요소도 감시 (가능하면)
+    // 컨텐츠가 추가될 수 있으므로 자식 요소도 감시
     const contents = el.querySelector('.contents-wrapper');
     if (contents) observer.observe(contents);
 
     return () => observer.disconnect();
   }, [updateScrollState]);
 
-  // 휠 스크롤 연동 및 기본 휠 감도 보정
+  // 마우스 스크롤 연동 보정
   useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
@@ -68,7 +68,7 @@ export default function HorizontalScrollRow({ children, className, contentClassN
       if ((isScrollingRight && canScrollRight) || (isScrollingLeft && canScrollLeft)) {
         e.preventDefault();
         el.scrollBy({
-          left: delta * 2.5, // 휠 감도 유지
+          left: delta * 2.5, // 감도 조절
           behavior: 'smooth'
         });
       }
@@ -115,7 +115,7 @@ export default function HorizontalScrollRow({ children, className, contentClassN
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* 1. 실제 스크롤 컨테이너 (네이티브 바 숨김) */}
+      {/* 1. 실제 스크롤 컨테이너 */}
       <div 
         ref={scrollRef}
         onMouseDown={onMouseDown}
@@ -133,7 +133,7 @@ export default function HorizontalScrollRow({ children, className, contentClassN
         </div>
       </div>
 
-      {/* 2. 커스텀 스크롤바 (콘텐츠 너비 기준 Indent) */}
+      {/* 2. 커스텀 스크롤바 */}
       {isScrollable && (
         <div className={cn(
           "px-layout-x mt-2 mb-2 transition-opacity duration-200",

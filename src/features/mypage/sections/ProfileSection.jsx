@@ -1,14 +1,17 @@
-import Icon from '../../../components/ui/Icon';
-import { USER_INFO } from '../../../constants/homeData';
+import React from 'react';
 import { cn } from '../../../utils/cn';
+import { useAuthStore } from '../../../store/useAuthStore';
 
 export default function ProfileSection({ className }) {
+  const { isLoggedIn, user } = useAuthStore();
+  
+  const displayName = isLoggedIn ? user?.name : "박구고마님";
+
   return (
     <section className={cn("flex flex-col items-center pt-[28px] mb-[4px]", className)}>
-      {/* 사용자명 + 수정 아이콘 (한 줄 중앙 정렬, 더 단정하게) */}
       <div className="mb-[20px]">
         <h2 className="text-[20px] font-bold text-text-dark tracking-tight">
-          {USER_INFO.name}
+          {displayName}
         </h2>
       </div>
     </section>
