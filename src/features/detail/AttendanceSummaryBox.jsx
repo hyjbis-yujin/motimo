@@ -3,16 +3,17 @@ import Icon from '../../components/ui/Icon';
 import { useChallengeStore } from '../../store/useChallengeStore';
 
 /**
- * 나의 출석 인증 현황 요약 박스
+ * 활성화된 참여 중인 챌린지의 현재 출석 현황 요약 (현재 출석일 / 전체 일수)
  */
-export default function AttendanceSummaryBox({ challengeId, total }) {
-  // 방어 코드 추가: attendanceData가 없거나 challengeId에 해당하는 데이터가 없는 경우를 고려
-  const current = useChallengeStore(state => {
+export default function AttendanceSummaryBox({ challengeId, total = 20 }) {
+  const attendanceInfo = useChallengeStore(state => {
     const allAttendance = state.attendanceData;
-    if (!allAttendance) return 0;
-    const currentAttendance = allAttendance[String(challengeId)];
-    return currentAttendance ? currentAttendance.length : 0;
+    return allAttendance ? allAttendance[String(challengeId)] : null;
   });
+
+  const currentCount = attendanceInfo?.checkedDates?.length || 0;
+  // 스토어에 보관된 totalDays가 있으면 우선 사용, 없으면 props로 전달받은 값 사용
+  const displayTotal = attendanceInfo?.totalDays || total;
 
   return (
     <div className="flex items-center justify-between bg-white border-4 border-[#f0f0f0] h-[70px] rounded-full px-8">
@@ -22,7 +23,7 @@ export default function AttendanceSummaryBox({ challengeId, total }) {
       </div>
       
       <div className="text-text-secondary text-[15px] font-medium">
-        <span className="text-primary-mint font-bold text-[18px]">{current}회</span> / {total}회
+        <span className="text-primary-mint font-bold text-[18px]">{currentCount}회</span> / {displayTotal}회
       </div>
     </div>
   );

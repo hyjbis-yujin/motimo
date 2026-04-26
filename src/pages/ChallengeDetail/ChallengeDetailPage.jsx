@@ -11,7 +11,7 @@ import AttendanceHistoryList from '../../features/detail/AttendanceHistoryList';
 import StickyActionButton from '../../features/detail/StickyActionButton';
 import EmptyState from '../../components/ui/EmptyState';
 import { CHALLENGE_DETAIL } from '../../data/challengeDetailData';
-import { FEED_CHALLENGES, POPULAR_CHALLENGES, TOP_CARDS } from '../../data/homeData';
+import { FEED_CHALLENGES, POPULAR_CHALLENGES, TOP_CARDS, RECOMMENDED_CHALLENGE } from '../../data/homeData';
 import { useAuthStore } from '../../store/useAuthStore';
 import { useChallengeStore } from '../../store/useChallengeStore';
 
@@ -23,19 +23,22 @@ const EMPTY_ARRAY = [];
 export default function ChallengeDetailPage() {
   const { id } = useParams();
   const isLoggedIn = useAuthStore(state => state.isLoggedIn);
-  
   const joinedChallenges = useChallengeStore(state => state.joinedChallenges || EMPTY_ARRAY);
-  const isJoined = useMemo(() => joinedChallenges.includes(String(id)), [joinedChallenges, id]);
+  
+  // 기능 수정: 참여 여부 판단 시 반드시 로그인 상태를 포함함
+  const isJoined = useMemo(() => isLoggedIn && joinedChallenges.includes(String(id)), [isLoggedIn, joinedChallenges, id]);
 
   const availableTabs = ["상세내용", "출석체크"];
   const [activeTab, setActiveTab] = useState("상세내용");
 
   const detailData = useMemo(() => {
+    // 모든 챌린지 데이터 소스를 통합하여 해당 ID의 정보를 검색함
     const allChallenges = [
       ...FEED_CHALLENGES,
       ...POPULAR_CHALLENGES,
       TOP_CARDS.left,
-      TOP_CARDS.right
+      TOP_CARDS.right,
+      RECOMMENDED_CHALLENGE
     ];
     
     const found = allChallenges.find(c => String(c.id) === String(id));
@@ -56,6 +59,24 @@ export default function ChallengeDetailPage() {
         participants: {
           ...baseDetail.participants,
           total: found.participants || baseDetail.participants.total
+        },
+        info: {
+          capacity: found.info?.capacity || baseDetail.info.capacity,
+          period: found.info?.period || baseDetail.info.period,
+          detailBody: found.info?.detailBody || baseDetail.info.detailBody,
+        },
+        attendance: {
+          ...baseDetail.attendance,
+          summary: {
+            ...baseDetail.attendance.summary,
+            total: found.totalDays || baseDetail.attendance.summary.total || 20
+          },
+          // 기간(totalDays)에 맞춰 회차 슬롯을 동적으로 생성
+          myStatus: Array.from({ length: found.totalDays || 20 }, (_, i) => ({
+            id: i + 1,
+            session: i + 1,
+            isChecked: false
+          }))
         }
       };
     }
@@ -104,8 +125,9 @@ export default function ChallengeDetailPage() {
             <div className="px-layout-x min-h-[450px] flex flex-col justify-center">
               {!isLoggedIn ? (
                 <EmptyState 
+                  iconName="notif-login"
                   title="로그인이 필요해요"
-                  description="로그인 후 출석 현황을 확인할 수 있어요."
+                  description="로그인 후에 출석 현황을 확인하실 수 있어요"
                   actionLabel="로그인하러 가기"
                   actionTo="/login"
                   className="py-10"
@@ -114,7 +136,7 @@ export default function ChallengeDetailPage() {
                 <EmptyState 
                   iconName="notif-notjoined"
                   title="참여 중인 챌린지가 아니에요"
-                  description="챌린지 참여 후 출석체크를 할 수 있어요."
+                  description="챌린지 참여 후에 출석체크를 하실 수 있어요"
                   className="py-10"
                 />
               ) : (
@@ -142,7 +164,12 @@ export default function ChallengeDetailPage() {
         </div>
       </div>
 
-      <StickyActionButton activeTab={activeTab} challengeId={id} isJoined={isJoined} />
+      <StickyActionButton 
+        activeTab={activeTab} 
+        challengeId={id} 
+        challengeTitle={detailData.title}
+        totalDays={detailData.attendance?.summary?.total || 20}
+      />
     </MobileContainer>
   );
 }

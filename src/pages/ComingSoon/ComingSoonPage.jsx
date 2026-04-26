@@ -14,6 +14,7 @@ export default function ComingSoonPage() {
     >
       <div className="flex flex-col items-center justify-center min-h-[80dvh] px-layout-x">
         <EmptyState 
+          iconName="service-soon"
           title="서비스를 준비중입니다"
           description={`더욱 멋진 기능을 위해 열심히 만들고 있어요\n조금만 더 기다려 주시면 감사하겠습니다`}
           actionLabel="홈으로 돌아가기"

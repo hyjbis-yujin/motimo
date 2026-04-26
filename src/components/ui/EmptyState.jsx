@@ -23,7 +23,7 @@ export default function EmptyState({
       </div>
 
       {/* 텍스트 정보 - 타이틀 22px, 서브타이틀 15px 사양 적용 */}
-      <h3 className="text-[22px] font-bold text-text-dark mb-3 tracking-tight">{title}</h3>
+      <h3 className="text-[18px] font-bold text-text-dark mb-3 tracking-tight">{title}</h3>
       <p className="text-[15px] text-text-secondary leading-relaxed mb-10 whitespace-pre-wrap break-keep font-medium">
         {description}
       </p>

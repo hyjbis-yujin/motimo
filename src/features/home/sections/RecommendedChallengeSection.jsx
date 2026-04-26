@@ -3,24 +3,36 @@ import { useNavigate } from 'react-router-dom';
 import Button from '../../../components/ui/Button';
 import Icon from '../../../components/ui/Icon';
 import { RECOMMENDED_CHALLENGE } from '../../../data/homeData';
-import { USER_INFO } from '../../../data/userData';
+import { useAuthStore } from '../../../store/useAuthStore';
 
+/**
+ * 홈 하단 추천 챌린지 섹션
+ * 로그인한 사용자의 닉네임을 동적으로 표시합니다.
+ */
 export default function RecommendedChallengeSection() {
   const navigate = useNavigate();
   const { title, currentInfo, buttonText, id } = RECOMMENDED_CHALLENGE;
+  
+  // 로그인 상태의 유저 정보를 가져옵니다.
+  const user = useAuthStore(state => state.user);
+  const isLoggedIn = useAuthStore(state => state.isLoggedIn);
+  
+  // 로그인 시 유저 이름, 비로그인 시 기본값 "게스트" 사용
+  const displayName = isLoggedIn && user?.name ? user.name : "게스트";
 
   return (
     <section className="bg-bg-subtle py-8 mt-6 mb-12">
       <div className="px-layout-x">
+        {/* 동적 닉네임 적용 영역 */}
         <h4 className="text-[12px] font-medium text-[#9c9c9c] mb-3 ml-1 tracking-tight">
-          {USER_INFO.name}님님 이런 챌린지는 어떠세요?
+          {displayName}님 이런 챌린지는 어떠세요?
         </h4>
 
         <div className="w-full h-[86px] bg-white rounded-recommend px-[20px] flex items-center justify-between mt-[10px]">
 
           <div className="flex items-center gap-[16px] ">
             <div className="w-[50px] h-[50px] rounded-[14px] overflow-hidden flex-shrink-0 flex items-center justify-center bg-bg-subtle">
-              <Icon name="category-hobby" className="" />
+              <Icon name="category-hobby" />
             </div>
 
             <div className="flex flex-col gap-[2px] tracking-tight ">

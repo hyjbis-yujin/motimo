@@ -6,15 +6,18 @@ import Icon from './Icon';
 import { useAuthStore } from '../../store/useAuthStore';
 import { useChallengeStore } from '../../store/useChallengeStore';
 
+// 기본 폴백 이미지 임포트
+import defaultCardImg from '../../assets/images/default-card.png';
+
 /**
- * 챌린지 카드 오버레이 (가독성 향상 그라데이션)
+ * 챌린지 카드 오버레이 (가독성 향상 그라디언트)
  */
 const CardOverlay = () => (
   <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent pointer-events-none" />
 );
 
 /**
- * 카드 상단 영역 (찜하기 버튼, 인원수, 뱃지)
+ * 카드 상단 영역 (찜하기 버튼, 참여자 수, 뱃지)
  */
 const CardHeader = ({ id, isLiked, onLikeToggle, isTopVariant, participants, badge }) => (
   <div className="relative z-10 w-full px-4 pt-4 flex justify-between items-start">
@@ -44,7 +47,7 @@ const CardHeader = ({ id, isLiked, onLikeToggle, isTopVariant, participants, bad
 );
 
 /**
- * 카드 하단 영역 (제목, 설명, 인원수)
+ * 카드 하단 영역 (제목, 설명, 참여자 수)
  */
 const CardFooter = ({ title, desc, participants, variant, isTopVariant, isFeedStyle }) => (
   <div className="relative z-10 w-full p-5 pt-0 flex flex-col justify-end">
@@ -80,7 +83,7 @@ const CardFooter = ({ title, desc, participants, variant, isTopVariant, isFeedSt
 );
 
 /**
- * 프로젝트 전체에서 공용으로 사용하는 챌린지 카드 컴포넌트
+ * 챌린지 카드 공통 컴포넌트
  */
 export default function ChallengeCard({
   className,
@@ -90,7 +93,7 @@ export default function ChallengeCard({
   badge,
   participants,
   imageUrl,
-  variant = 'feed' // 'top-left', 'top-right', 'feed', 'popular', 'mypage'
+  variant = 'feed'
 }) {
   const navigate = useNavigate();
   const location = useLocation();
@@ -102,7 +105,6 @@ export default function ChallengeCard({
   const handleLikeToggle = (e) => {
     e.stopPropagation();
     if (!isLoggedIn) {
-      // 로그인 전 하트 클릭 시 로그인 페이지로 이동 (리다이렉트 경로 포함)
       navigate('/login', { state: { from: location.pathname } });
       return;
     }
@@ -127,11 +129,19 @@ export default function ChallengeCard({
 
   return (
     <div className={cn(baseCardStyles, variantsStyles[variant], className)} onClick={handleCardClick}>
-      {imageUrl ? (
-        <img src={imageUrl} alt="" className="absolute inset-0 w-full h-full object-cover select-none pointer-events-none" />
-      ) : (
-        <div className="absolute inset-0 bg-[#8c8d91] mix-blend-multiply opacity-60" />
-      )}
+      {/* 
+        이미지 렌더링 및 에러 시 폴백 처리 
+        Vite 환경에서의 안정적인 동작을 위해 이미지를 직접 import하여 사용합니다.
+      */}
+      <img 
+        src={imageUrl || defaultCardImg} 
+        alt="" 
+        className="absolute inset-0 w-full h-full object-cover select-none pointer-events-none" 
+        onError={(e) => {
+          e.currentTarget.src = defaultCardImg;
+          e.currentTarget.onerror = null; 
+        }}
+      />
 
       <CardOverlay />
       

@@ -4,7 +4,7 @@ import useSimpleHorizontalDrag from '../../hooks/useSimpleHorizontalDrag';
 
 /**
  * 전역 공통 가로 스크롤 컴포넌트
- * 마우스 드래그 이벤트를 지원하며 커스텀 스크롤바를 별도 제공합니다.
+ * 반응형 대응: 터치 슬라이드 최적화 및 마지막 카드 패딩 보정 (스페이서 활용)
  */
 export default function HorizontalScrollRow({ children, className, contentClassName }) {
   const { 
@@ -16,7 +16,6 @@ export default function HorizontalScrollRow({ children, className, contentClassN
     isDragging 
   } = useSimpleHorizontalDrag();
 
-  // 스크롤바 상태 관리
   const [scrollState, setScrollState] = useState({
     scrollLeft: 0,
     scrollWidth: 0,
@@ -33,10 +32,8 @@ export default function HorizontalScrollRow({ children, className, contentClassN
     });
   }, [scrollRef]);
 
-  // 초기 로드 및 리사이즈 대응
   useEffect(() => {
     updateScrollState();
-    
     const el = scrollRef.current;
     if (!el) return;
 
@@ -45,14 +42,12 @@ export default function HorizontalScrollRow({ children, className, contentClassN
     });
     
     observer.observe(el);
-    // 컨텐츠가 추가될 수 있으므로 자식 요소도 감시
     const contents = el.querySelector('.contents-wrapper');
     if (contents) observer.observe(contents);
 
     return () => observer.disconnect();
   }, [updateScrollState]);
 
-  // 마우스 스크롤 연동 보정
   useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
@@ -68,7 +63,7 @@ export default function HorizontalScrollRow({ children, className, contentClassN
       if ((isScrollingRight && canScrollRight) || (isScrollingLeft && canScrollLeft)) {
         e.preventDefault();
         el.scrollBy({
-          left: delta * 2.5, // 감도 조절
+          left: delta * 2,
           behavior: 'smooth'
         });
       }
@@ -85,7 +80,6 @@ export default function HorizontalScrollRow({ children, className, contentClassN
 
   const [isHovered, setIsHovered] = useState(false);
 
-  // 커스텀 스크롤바 계산
   const { thumbWidthPercent, thumbLeftPercent, isScrollable } = useMemo(() => {
     const { scrollLeft, scrollWidth, clientWidth } = scrollState;
     if (scrollWidth <= clientWidth) {
@@ -93,20 +87,14 @@ export default function HorizontalScrollRow({ children, className, contentClassN
     }
 
     const ratio = clientWidth / scrollWidth;
-    const thumbWidth = Math.max(ratio * 100, 10); // 최소 너비 10%
-    
+    const thumbWidth = Math.max(ratio * 100, 10);
     const maxScroll = scrollWidth - clientWidth;
     const progress = scrollLeft / (maxScroll || 1);
     const thumbLeft = progress * (100 - thumbWidth);
 
-    return { 
-      thumbWidthPercent: thumbWidth, 
-      thumbLeftPercent: thumbLeft,
-      isScrollable: true 
-    };
+    return { thumbWidthPercent: thumbWidth, thumbLeftPercent: thumbLeft, isScrollable: true };
   }, [scrollState]);
 
-  // 가시성 조건: 호버 중이거나 드래그 중인 경우
   const isVisible = isHovered || isDragging;
 
   return (
@@ -115,7 +103,6 @@ export default function HorizontalScrollRow({ children, className, contentClassN
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* 1. 실제 스크롤 컨테이너 */}
       <div 
         ref={scrollRef}
         onMouseDown={onMouseDown}
@@ -123,17 +110,26 @@ export default function HorizontalScrollRow({ children, className, contentClassN
         onMouseUp={onMouseUp}
         onMouseMove={onMouseMove}
         className={cn(
-          "overflow-x-auto select-none hide-native-scrollbar drag-scroll-row pb-1", 
+          "overflow-x-auto select-none hide-native-scrollbar drag-scroll-row pb-1 cursor-grab active:cursor-grabbing", 
           isDragging ? "is-dragging" : ""
         )}
-        style={{ touchAction: 'pan-y' }}
+        style={{ 
+          touchAction: 'pan-x',
+          WebkitOverflowScrolling: 'touch' 
+        }}
       >
-        <div className={cn("w-max contents-wrapper [&_img]:pointer-events-none px-layout-x", contentClassName)}>
+        {/* 
+          반응형 수정: 
+          inline-flex 구조에서 padding-right가 무시되는 문제를 해결하기 위해 
+          마지막에 spacer div를 추가하여 여백을 확보함 
+        */}
+        <div className={cn("inline-flex items-center contents-wrapper [&_img]:pointer-events-none pl-layout-x", contentClassName)}>
           {children}
+          {/* 마지막 카드 뒤 여백 (18px) */}
+          <div className="w-[18px] flex-shrink-0 h-1" aria-hidden="true" />
         </div>
       </div>
 
-      {/* 2. 커스텀 스크롤바 */}
       {isScrollable && (
         <div className={cn(
           "px-layout-x mt-2 mb-2 transition-opacity duration-200",

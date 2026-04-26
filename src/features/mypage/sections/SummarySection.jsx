@@ -1,23 +1,21 @@
 import React from 'react';
-import ProfileAvatar from '../../../components/ui/ProfileAvatar';
 import SummaryStatCard from '../../../components/ui/SummaryStatCard';
 import { useChallengeStore } from '../../../store/useChallengeStore';
 import { useAuthStore } from '../../../store/useAuthStore';
 
+/**
+ * 마이페이지 통계 요약 섹션
+ * 프로필 아바타를 ProfileSection으로 이동하여 통계 카드에 집중하도록 수정했습니다.
+ */
 export default function SummarySection() {
   const isLoggedIn = useAuthStore(state => state.isLoggedIn);
-  const joinedCount = useChallengeStore(state => state.joinedChallenges.length);
+  const joinedCount = useChallengeStore(state => state.joinedChallenges?.length || 0);
   
-  // 포인트는 목업 데이터 유지 (추후 챌린지 성공 시 증가 로직 추가 가능)
+  // 포인트는 로그인 시 500P (목업)
   const points = isLoggedIn ? 500 : 0;
 
   return (
-    <section className="px-layout-x mb-[48px] relative pt-[34px]">
-      {/* 프로필 이미지 (카드 상단 중앙에 오버레이) */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 z-20">
-        <ProfileAvatar />
-      </div>
-      
+    <section className="px-layout-x mb-[40px]">
       <SummaryStatCard 
         activeChallenges={isLoggedIn ? joinedCount : 0} 
         attendancePoints={points} 

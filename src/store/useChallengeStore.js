@@ -2,37 +2,52 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 /**
- * 챌린지 참여, 찜, 출석 데이터를 관리하는 스토어
- * persist 미들웨어를 사용하여 로컬 스토리지에 데이터를 보존합니다.
+ * 챌린지 참여 및 출석 데이터를 관리하는 스토어
  */
 export const useChallengeStore = create(
   persist(
     (set, get) => ({
-      // 내가 참여 중인 챌린지 ID 목록
-      joinedChallenges: ['m1', 'm2', 'm3'], 
-      
-      // 내가 찜한 챌린지 ID 목록
+      joinedChallenges: [], 
       likedChallenges: [],
-      
-      // 완료된 챌린지 ID 목록
       completedChallenges: [],
+      attendanceData: {},
 
-      // 챌린지별 출석 현황: { [challengeId]: [completedDays] }
-      attendanceData: {
-        'm1': [1], // m1 챌린지 1회차 출석 완료
-      },
+      /**
+       * 챌린지 참여
+       * 참여하기와 출석체크를 분리하기 위해, 참여 시에는 출석 데이터를 초기화하거나 기존 데이터를 유지하지 않도록 보장합니다.
+       */
+      joinChallenge: (challengeId, totalDays = 20) => set((state) => {
+        const id = String(challengeId);
+        // 이미 참여 중이라면 상태 변경 없음
+        if (state.joinedChallenges.includes(id)) return state;
 
-      // 챌린지 참여
-      joinChallenge: (challengeId) => set((state) => ({
-        joinedChallenges: [...new Set([...(state.joinedChallenges || []), String(challengeId)])]
-      })),
+        return {
+          joinedChallenges: [...state.joinedChallenges, id],
+          attendanceData: {
+            ...state.attendanceData,
+            // 참여 시 해당 챌린지의 출석 기록을 항상 빈 상태로 시작 (참여와 출석 분리)
+            [id]: { checkedDates: [], totalDays }
+          }
+        };
+      }),
 
-      // 챌린지 탈퇴
-      leaveChallenge: (challengeId) => set((state) => ({
-        joinedChallenges: (state.joinedChallenges || []).filter(id => id !== String(challengeId))
-      })),
+      /**
+       * 챌린지 탈퇴
+       */
+      leaveChallenge: (challengeId) => set((state) => {
+        const id = String(challengeId);
+        const nextJoined = (state.joinedChallenges || []).filter(item => item !== id);
+        
+        // 탈퇴 시 해당 챌린지의 출석 데이터도 함께 삭제하여 다음 참여 시 깨끗한 상태로 시작할 수 있게 함
+        const nextAttendance = { ...state.attendanceData };
+        delete nextAttendance[id];
 
-      // 찜하기 토글
+        return {
+          joinedChallenges: nextJoined,
+          attendanceData: nextAttendance
+        };
+      }),
+
       toggleLike: (challengeId) => set((state) => {
         const id = String(challengeId);
         const likedChallenges = state.likedChallenges || [];
@@ -44,34 +59,48 @@ export const useChallengeStore = create(
         };
       }),
 
-      // 출석 체크 (중복 및 undefined 방지)
-      checkAttendance: (challengeId, day) => set((state) => {
+      /**
+       * 출석 체크
+       */
+      checkAttendance: (challengeId) => set((state) => {
         const id = String(challengeId);
+        const today = new Date().toISOString().split('T')[0];
         const allAttendance = state.attendanceData || {};
-        const currentAttendance = allAttendance[id] || [];
+        const challengeData = allAttendance[id] || { checkedDates: [], totalDays: 20 };
         
-        if (currentAttendance.includes(day)) return state;
+        if (challengeData.checkedDates.includes(today)) {
+          return state;
+        }
 
         return {
           attendanceData: {
             ...allAttendance,
-            [id]: [...currentAttendance, day]
+            [id]: {
+              ...challengeData,
+              checkedDates: [...challengeData.checkedDates, today]
+            }
           }
         };
       }),
 
-      // 특정 챌린지 참여 여부 확인 (Safe)
       isJoined: (challengeId) => (get().joinedChallenges || []).includes(String(challengeId)),
-      
-      // 특정 챌린지 찜 여부 확인 (Safe)
       isLiked: (challengeId) => (get().likedChallenges || []).includes(String(challengeId)),
 
-      // 특정 챌린지 출석 횟수 확인 (Safe)
       getAttendanceCount: (challengeId) => {
         const id = String(challengeId);
         const allAttendance = get().attendanceData || {};
-        return (allAttendance[id] || []).length;
+        const challengeData = allAttendance[id];
+        if (!challengeData) return 0;
+        return Array.isArray(challengeData.checkedDates) ? challengeData.checkedDates.length : 0;
       },
+
+      hasCheckedToday: (challengeId) => {
+        const id = String(challengeId);
+        const today = new Date().toISOString().split('T')[0];
+        const allAttendance = get().attendanceData || {};
+        const challengeData = allAttendance[id];
+        return challengeData?.checkedDates?.includes(today) || false;
+      }
     }),
     {
       name: 'motimo-challenge-storage',
