@@ -24,7 +24,7 @@ export default function ChallengeFeedSection({ cards, onLoadMore, onCollapse, ha
 
       <Button 
         variant="dark" 
-        className="w-full h-pill mt-4 mb-12"
+        className="w-full h-pill mt-4 mb-12 text-sm rounded-btn-md"
         onClick={hasMore ? onLoadMore : onCollapse}
       >
         {hasMore ? "더 많은 챌린지 검색하기 +" : "챌린지 목록 접기 -"}

@@ -31,7 +31,7 @@
 @theme {
   /* 1. Typography */
   --font-sans: 'Pretendard', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  
+
   --text-xs: 11px;
   --text-sm: 12px;
   --text-base: 14px;
@@ -47,8 +47,8 @@
   --color-primary-light: #eff8f6;
 
   --color-bg-app: #ffffff;
-  --color-bg-subtle: #fcfcfc;
-  --color-bg-gray: #f8f8f8;
+  --color-bg-subtle: #f8f8f8;
+  --color-bg-gray: #f5f5f5;
   --color-bg-divider: #fbfbfb;
 
   --color-text-dark: #333333;
@@ -70,7 +70,7 @@
   --spacing-header: 60px;
   --spacing-tabbar: 80px;
   --spacing-layout-x: 18px;
-  
+
   --spacing-btn-sm: 36px;
   --spacing-banner: 100px;
   --spacing-recommend: 86px;
@@ -81,6 +81,7 @@
   --radius-box-lg: 24px;
   --radius-card: 18px;
   --radius-btn: 16px;
+  --radius-btn-md: 13px;
   --radius-btn-sm: 10px;
   --radius-avatar: 22px;
   --radius-avatar-lg: 28px;
@@ -95,6 +96,7 @@
   --shadow-card-light: 0 4px 12px rgba(0, 0, 0, 0.04);
   --shadow-card-subtle: 0 2px 16px rgba(0, 0, 0, 0.03);
   --shadow-banner: 0 2px 8px rgba(41, 216, 181, 0.15);
+  --shadow-divider: inset 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
 @layer base {
@@ -119,11 +121,20 @@
     min-height: 100dvh;
   }
 
-  h1, h2, h3, h4, h5, h6, p {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p {
     margin: 0;
   }
 
-  button, input, textarea, select {
+  button,
+  input,
+  textarea,
+  select {
     font: inherit;
     color: inherit;
   }
@@ -138,7 +149,8 @@
     text-decoration: none;
   }
 
-  ul, ol {
+  ul,
+  ol {
     margin: 0;
     padding: 0;
     list-style: none;
@@ -153,6 +165,7 @@
 }
 
 @layer components {
+
   /* 스크롤바 숨기기 유틸리티 */
   .hide-native-scrollbar {
     -ms-overflow-style: none;

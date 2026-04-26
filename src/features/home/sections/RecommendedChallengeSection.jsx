@@ -31,7 +31,7 @@ export default function RecommendedChallengeSection() {
 
           <div className="flex items-center gap-4">
             {/* 카테고리 아이콘 박스 (Subtle Gray) */}
-            <div className="w-[50px] h-[50px] rounded-box overflow-hidden flex-shrink-0 flex items-center justify-center bg-bg-subtle">
+            <div className="w-[50px] h-[50px] rounded-box overflow-hidden flex-shrink-0 flex items-center justify-center bg-bg-subtle border border-border-light">
               <Icon name="category-hobby" />
             </div>
 

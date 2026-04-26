@@ -6,7 +6,7 @@ import ChallengeDetailPage from '../pages/ChallengeDetail';
 import LoginPage from '../pages/Login';
 import NotificationPage from '../pages/Notification';
 import SearchPage from '../pages/Search';
-import ComingSoonPage from '../pages/ComingSoon/ComingSoonPage';
+import ComingSoonPage from '../pages/ComingSoon';
 import { useAuthStore } from '../store/useAuthStore';
 
 /**

@@ -16,7 +16,7 @@ export default function ChallengeInfoCard({ info }) {
   const periodValue = splitPeriod.slice(1).join(' ');
 
   return (
-    <div className="mx-layout-x mb-8 py-6 px-8 bg-white border-[5px] border-bg-gray rounded-box-lg shadow-card-subtle">
+    <div className="mx-layout-x mb-8 py-6 px-8 bg-white border-[5px] border-bg-gray rounded-box-lg">
       {/* 1. 상단 정보 섹션 */}
       <h3 className="text-md font-bold text-primary-mint mb-5 tracking-tight">참여정보</h3>
       <div className="flex flex-col gap-4 mb-7">

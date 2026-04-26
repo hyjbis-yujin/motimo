@@ -12,7 +12,7 @@ export default function PopularChallengeSection() {
   return (
     <section>
       {/* 섹션 간의 선명한 구분을 위한 영역 */}
-      <div className="w-full h-3 bg-bg-divider shadow-inner" />
+      <div className="w-full h-3 bg-bg-divider shadow-divider" />
 
       <div className="px-layout-x mb-6 mt-10">
         <SectionTitle 

@@ -1,5 +1,8 @@
 import React from 'react';
 
+// Profile Icons
+import avatarDefault from '../../assets/images/profiles/avatar-default.svg';
+
 // 1. Action Icons
 import iconActionBack from '../../assets/icons/action-back.svg';
 import iconActionClose from '../../assets/icons/action-close.svg';
@@ -65,6 +68,7 @@ const ICON_MAP = {
   'close': iconActionClose,
   'action-close': iconActionClose,
   'search': iconHeaderSearch,
+  'profile-default': avatarDefault,
 
   // Notification & Feedback
   'notif-bell': headerNotification,
@@ -130,15 +134,16 @@ const ICON_SIZE = {
   'action-heart': { w: 19, h: 17 },
   'action-help': { w: 16, h: 16 },
   'status-participants': { w: 18, h: 13 },
+  'category-exercise': { w: 23, h: 23 },
   'attendance-bg': { w: 66, h: 66 },
 };
 
 /**
  * 범용 아이콘 컴포넌트
  */
-export default function Icon({ name, active = false, className, width, height, style }) {
+export default function Icon({ name, src, active = false, className, width, height, style }) {
   const iconName = active ? `${name}-active` : name;
-  const SvgIcon = ICON_MAP[iconName] || ICON_MAP[name];
+  const SvgIcon = src || ICON_MAP[iconName] || ICON_MAP[name];
 
   if (!SvgIcon) return null;
 
