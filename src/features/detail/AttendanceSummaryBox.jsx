@@ -22,8 +22,8 @@ export default function AttendanceSummaryBox({ challengeId, total = 20 }) {
         <span className="text-text-dark font-semibold text-[15px]">나의 출석인증 수</span>
       </div>
       
-      <div className="text-text-secondary text-[15px] font-medium">
-        <span className="text-primary-mint font-bold text-[18px]">{currentCount}회</span> / {displayTotal}회
+      <div className="text-text-secondary text-base font-medium">
+        <span className="text-primary-mint font-bold text-lg">{currentCount}회</span> / {displayTotal}회
       </div>
     </div>
   );

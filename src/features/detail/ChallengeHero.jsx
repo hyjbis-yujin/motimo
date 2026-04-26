@@ -5,7 +5,6 @@ import defaultHeroImg from '../../assets/images/default-card.png';
 
 /**
  * 챌린지 상세페이지 상단 히어로 영역
- * 이미지 로딩 실패 시 폴백 이미지를 표시하도록 개선했습니다.
  */
 export default function ChallengeHero({ imageUrl }) {
   const navigate = useNavigate();
@@ -29,7 +28,7 @@ export default function ChallengeHero({ imageUrl }) {
         />
       )}
 
-      {/* 가독성 오버레이 (투명도 조정) */}
+      {/* 가독성 오버레이 */}
       <div className="absolute inset-0 bg-black/40" />
 
       {/* 상단 액션바 */}
@@ -40,7 +39,10 @@ export default function ChallengeHero({ imageUrl }) {
           className="flex items-center justify-center text-white cursor-pointer active:opacity-50 transition-opacity -ml-1 h-10 w-10"
           aria-label="Back"
         >
-          <Icon name="header-back" className="!w-[11px] !h-auto brightness-0 invert" />
+          <Icon 
+            name="header-back" 
+            className="!w-[11px] !h-auto brightness-0 invert" 
+          />
         </button>
       </div>
     </section>

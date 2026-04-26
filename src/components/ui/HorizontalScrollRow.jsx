@@ -125,8 +125,8 @@ export default function HorizontalScrollRow({ children, className, contentClassN
         */}
         <div className={cn("inline-flex items-center contents-wrapper [&_img]:pointer-events-none pl-layout-x", contentClassName)}>
           {children}
-          {/* 마지막 카드 뒤 여백 (18px) */}
-          <div className="w-[18px] flex-shrink-0 h-1" aria-hidden="true" />
+          {/* 마지막 카드 뒤 여백 */}
+          <div className="w-layout-x flex-shrink-0 h-1" aria-hidden="true" />
         </div>
       </div>
 
@@ -135,9 +135,9 @@ export default function HorizontalScrollRow({ children, className, contentClassN
           "px-layout-x mt-2 mb-2 transition-opacity duration-200",
           isVisible ? "opacity-100" : "opacity-0"
         )}>
-          <div className="relative w-full h-[7px] bg-[#ededed] rounded-full overflow-hidden">
+          <div className="relative w-full h-[7px] bg-border-divider rounded-full overflow-hidden">
             <div 
-              className="absolute top-0 h-full bg-[#c4c4c4] rounded-full transition-transform duration-75 ease-out"
+              className="absolute top-0 h-full bg-tab-inactive rounded-full transition-transform duration-75 ease-out"
               style={{ 
                 width: `${thumbWidthPercent}%`,
                 transform: `translateX(${thumbLeftPercent * (100 / thumbWidthPercent)}%)`

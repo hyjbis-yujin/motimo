@@ -15,7 +15,7 @@ export default function SummarySection() {
   const points = isLoggedIn ? 500 : 0;
 
   return (
-    <section className="px-layout-x mb-[40px]">
+    <section className="px-layout-x mb-10">
       <SummaryStatCard 
         activeChallenges={isLoggedIn ? joinedCount : 0} 
         attendancePoints={points} 

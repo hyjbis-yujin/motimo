@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuthStore } from '../../store/useAuthStore';
 
+/**
+ * 로그인 폼 컴포넌트
+ */
 export default function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -28,7 +31,7 @@ export default function LoginForm() {
         <input 
           type="email" 
           placeholder="이메일을 입력해주세요" 
-          className="w-full h-[56px] px-4 rounded-[16px] bg-[#fbfbfb] border border-[#eeeeee] text-[15px] outline-none focus:border-primary-mint transition-colors placeholder:text-[#bbbbbb]"
+          className="w-full h-[56px] px-4 rounded-banner bg-bg-gray border border-border-subtle text-base outline-none focus:border-primary-mint transition-colors placeholder:text-[#bbbbbb]"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
@@ -36,7 +39,7 @@ export default function LoginForm() {
         <input 
           type="password" 
           placeholder="비밀번호를 입력해주세요" 
-          className="w-full h-[56px] px-4 rounded-[16px] bg-[#fbfbfb] border border-[#eeeeee] text-[15px] outline-none focus:border-primary-mint transition-colors placeholder:text-[#bbbbbb]"
+          className="w-full h-[56px] px-4 rounded-banner bg-bg-gray border border-border-subtle text-base outline-none focus:border-primary-mint transition-colors placeholder:text-[#bbbbbb]"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
@@ -44,7 +47,7 @@ export default function LoginForm() {
 
         <button 
           type="submit" 
-          className="w-full h-[56px] mt-2 bg-primary-mint text-white text-[16px] font-bold rounded-[16px] active:bg-primary-dark transition-colors"
+          className="w-full h-[56px] mt-2 bg-primary-mint text-white text-md font-bold rounded-banner active:bg-primary-dark transition-colors"
         >
           로그인
         </button>
@@ -60,7 +63,7 @@ export default function LoginForm() {
           >
             아이디 찾기
           </button>
-          <span className="text-[#e2e2e2] text-[10px]">|</span>
+          <span className="text-[#e2e2e2] text-xs">|</span>
           <button 
             type="button" 
             className="active:text-text-dark transition-colors"
@@ -68,7 +71,7 @@ export default function LoginForm() {
           >
             비밀번호 찾기
           </button>
-          <span className="text-[#e2e2e2] text-[10px]">|</span>
+          <span className="text-[#e2e2e2] text-xs">|</span>
           <button 
             type="button" 
             className="active:text-text-dark transition-colors"
@@ -79,7 +82,7 @@ export default function LoginForm() {
         </div>
         
         {isComingSoon && (
-          <p className="mt-4 text-[12px] text-primary-mint font-semibold animate-fade-in">
+          <p className="mt-4 text-sm text-primary-mint font-semibold animate-fade-in">
             서비스 준비 중입니다. 잠시만 기다려주세요.
           </p>
         )}

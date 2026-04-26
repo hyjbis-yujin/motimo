@@ -18,12 +18,12 @@ function HistoryItem({ avatar, user, date, index }) {
 
   return (
     <div className="flex items-center gap-4 bg-bg-subtle p-4 rounded-card h-[78px]">
-      <div className="w-[48px] h-[48px] rounded-full bg-white border border-[#eeeeee] flex items-center justify-center shadow-inner overflow-hidden">
+      <div className="w-12 h-12 rounded-full bg-white border border-border-subtle flex items-center justify-center shadow-inner overflow-hidden">
         <img src={displayAvatar} alt="User" className="w-[28px] h-[28px] object-contain" />
       </div>
-      <p className="text-[14px] text-text-dark leading-tight">
+      <p className="text-base text-text-dark leading-tight">
         <span className="font-bold">{user}</span>님이 <br/>
-        <span className="text-text-secondary text-[12px]">{date} 출석하셨습니다</span>
+        <span className="text-text-secondary text-sm">{date} 출석하셨습니다</span>
       </p>
     </div>
   );

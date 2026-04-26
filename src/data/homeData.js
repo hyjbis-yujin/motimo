@@ -1,12 +1,3 @@
-export const CATEGORIES = [
-  { id: 1, type: 'study', label: '공부' },
-  { id: 2, type: 'exercise', label: '운동' },
-  { id: 3, type: 'habit', label: '습관' },
-  { id: 4, type: 'hobby', label: '취미' },
-  { id: 5, type: 'reading', label: '독서' },
-  { id: 6, type: 'etc', label: '기타' }
-];
-
 export const TOP_CARDS = {
   left: {
     id: 't1',

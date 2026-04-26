@@ -20,7 +20,7 @@ const CardOverlay = () => (
  * 카드 상단 영역 (찜하기 버튼, 참여자 수, 뱃지)
  */
 const CardHeader = ({ id, isLiked, onLikeToggle, isTopVariant, participants, badge }) => (
-  <div className="relative z-10 w-full px-4 pt-4 flex justify-between items-start">
+  <div className="relative z-10 w-full px-layout-x pt-layout-x flex justify-between items-start">
     <div className="flex items-center gap-2">
       <button 
         onClick={onLikeToggle}
@@ -33,7 +33,7 @@ const CardHeader = ({ id, isLiked, onLikeToggle, isTopVariant, participants, bad
       {isTopVariant && participants && (
         <div className="flex items-center gap-1">
           <Icon name="status-participants" className="brightness-[2] opacity-80" />
-          <span className="text-[12px] text-white font-semibold whitespace-nowrap">
+          <span className="text-sm text-white font-semibold whitespace-nowrap">
             {participants}명 참여 중
           </span>
         </div>
@@ -50,12 +50,12 @@ const CardHeader = ({ id, isLiked, onLikeToggle, isTopVariant, participants, bad
  * 카드 하단 영역 (제목, 설명, 참여자 수)
  */
 const CardFooter = ({ title, desc, participants, variant, isTopVariant, isFeedStyle }) => (
-  <div className="relative z-10 w-full p-5 pt-0 flex flex-col justify-end">
-    <h4 className="text-white font-bold text-[15px] leading-tight line-clamp-1">{title}</h4>
+  <div className="relative z-10 w-full px-layout-x pb-5 flex flex-col justify-end">
+    <h4 className="text-white font-bold text-base leading-tight line-clamp-1">{title}</h4>
     
     <div className="flex items-center justify-between mt-1">
       {desc && (
-        <p className="text-[rgba(255,255,255,0.85)] font-medium line-clamp-1 text-[12px]">
+        <p className="text-white/85 font-medium line-clamp-1 text-sm">
           {desc}
         </p>
       )}
@@ -64,8 +64,8 @@ const CardFooter = ({ title, desc, participants, variant, isTopVariant, isFeedSt
         <div className="flex items-center gap-1 ml-auto flex-shrink-0">
            <Icon name="status-participants" className="brightness-[2] opacity-80" />
            <span className={cn(
-            "font-semibold text-[12px]",
-            isFeedStyle ? "text-white" : "text-[rgba(255,255,255,0.95)]"
+            "font-semibold text-sm",
+            isFeedStyle ? "text-white" : "text-white/95"
           )}>
             {variant === 'mypage' ? participants : `${participants}명 참여 중`}
           </span>
@@ -74,7 +74,7 @@ const CardFooter = ({ title, desc, participants, variant, isTopVariant, isFeedSt
     </div>
 
     {variant === 'popular' && participants && (
-      <div className="flex items-center gap-1 text-[rgba(255,255,255,0.8)] font-semibold text-[12px] mt-[14px]">
+      <div className="flex items-center gap-1 text-white/80 font-semibold text-sm mt-3.5">
         <Icon name="status-participants" className="brightness-[2] opacity-80" />
         <span>{participants}명 참여 중</span>
       </div>
@@ -84,6 +84,7 @@ const CardFooter = ({ title, desc, participants, variant, isTopVariant, isFeedSt
 
 /**
  * 챌린지 카드 공통 컴포넌트
+ * 피드, 인기, 마이페이지 등 다양한 레이아웃 옵션을 지원합니다.
  */
 export default function ChallengeCard({
   className,
@@ -100,7 +101,7 @@ export default function ChallengeCard({
   const isLoggedIn = useAuthStore(state => state.isLoggedIn);
   const { likedChallenges, toggleLike } = useChallengeStore();
   
-  const isLiked = likedChallenges.includes(id);
+  const isLiked = isLoggedIn && likedChallenges.includes(String(id));
 
   const handleLikeToggle = (e) => {
     e.stopPropagation();
@@ -115,13 +116,13 @@ export default function ChallengeCard({
     navigate(`/challenge/${id || 1}`);
   };
 
-  const baseCardStyles = "relative flex flex-col justify-between rounded-[20px] overflow-hidden bg-[#e8e8e8] select-none group cursor-pointer shadow-card-subtle tracking-tight";
+  const baseCardStyles = "relative flex flex-col justify-between rounded-card overflow-hidden bg-bg-gray select-none group cursor-pointer shadow-card-subtle tracking-tight";
   const variantsStyles = {
     'top-left': "w-[280px] h-[160px] flex-shrink-0",
     'top-right': "w-[280px] h-[160px] flex-shrink-0",
     'feed': "w-full h-[142px]",
     'popular': "w-[184px] h-[260px] flex-shrink-0",
-    'mypage': "w-full h-[142px] rounded-[24px]", 
+    'mypage': "w-full h-[142px] rounded-box-lg", 
   };
 
   const isTopVariant = variant === 'top-left' || variant === 'top-right';
@@ -129,10 +130,6 @@ export default function ChallengeCard({
 
   return (
     <div className={cn(baseCardStyles, variantsStyles[variant], className)} onClick={handleCardClick}>
-      {/* 
-        이미지 렌더링 및 에러 시 폴백 처리 
-        Vite 환경에서의 안정적인 동작을 위해 이미지를 직접 import하여 사용합니다.
-      */}
       <img 
         src={imageUrl || defaultCardImg} 
         alt="" 

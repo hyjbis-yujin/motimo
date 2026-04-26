@@ -26,8 +26,8 @@ export default function MobileContainer({
         
         <main className={cn(
           "flex-1 overflow-y-auto hide-native-scrollbar",
-          showHeader && "pt-[60px]",
-          showTabBar && "pb-[80px]",
+          showHeader && "pt-header",
+          showTabBar && "pb-tabbar",
           mainClassName
         )}>
           {children}

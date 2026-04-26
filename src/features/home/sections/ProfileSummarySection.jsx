@@ -22,14 +22,13 @@ export default function ProfileSummarySection() {
 
   return (
     <section className="px-layout-x mt-8 mb-4">
-      <div className="bg-[#fcfcfc] rounded-sheet p-[20px] flex items-center gap-[18px] border border-[#f3f3f3] shadow-card-subtle">
+      <div className="bg-bg-subtle rounded-sheet p-5 flex items-center gap-layout-x border border-border-card shadow-card-subtle">
         
         {/* 1. 프로필 이미지 박스 (로그인 여부에 따라 아바타 교체) */}
-        <div className="flex-shrink-0 w-[60px] h-[60px] rounded-[22px] bg-white border border-[#eeeeee] flex items-center justify-center shadow-inner overflow-hidden">
+        <div className="flex-shrink-0 w-[60px] h-[60px] rounded-avatar bg-white border border-border-subtle flex items-center justify-center shadow-inner overflow-hidden">
           {isLoggedIn && user?.profileImage ? (
             <img src={user.profileImage} alt="프로필" className="w-[32px] h-[32px] object-contain" />
           ) : (
-            /* 로그인 전에는 6.svg 이미지를 기본으로 노출 */
             <img src={defaultAvatar} alt="로그인 전 프로필" className="w-[32px] h-[32px] object-contain" />
           )}
         </div>
@@ -39,7 +38,7 @@ export default function ProfileSummarySection() {
           <h3 className="text-[16px] font-bold text-text-dark leading-tight tracking-tight">
             {title}
           </h3>
-          <p className="text-[12.5px] text-text-secondary font-medium tracking-tight mt-1 line-clamp-1">
+          <p className="text-sm text-text-secondary font-medium tracking-tight mt-1 line-clamp-1">
             {subTitle}
           </p>
         </div>
@@ -47,7 +46,7 @@ export default function ProfileSummarySection() {
         {/* 3. 액션 버튼 */}
         <Button 
           variant="small" 
-          className="shrink-0 px-4 h-[36px] bg-btn-dark rounded-[12px] text-[13px]" 
+          className="shrink-0 px-4 h-btn-sm bg-btn-dark rounded-btn-sm text-[13px]" 
           onClick={handleAction}
         >
           {buttonLabel}

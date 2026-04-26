@@ -2,9 +2,13 @@ import React from 'react';
 import { cn } from '../../utils/cn';
 import Icon from './Icon';
 
+/**
+ * 섹션 제목 컴포넌트
+ * 민트색 포인트 점(Dot)이나 아이콘을 제목 좌측에 배치할 수 있습니다.
+ */
 export default function SectionTitle({ title, hasMintDot = false, icon, className }) {
   return (
-    <h3 className={cn("font-bold text-[18px] text-text-dark flex items-center gap-1.5", className)}>
+    <h3 className={cn("font-bold text-lg text-text-dark flex items-center gap-1.5", className)}>
       {icon ? (
         <Icon name={icon} />
       ) : hasMintDot && (

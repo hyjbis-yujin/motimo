@@ -94,7 +94,7 @@ export default function ChallengeDetailPage() {
       <ChallengeHero imageUrl={detailData.heroImage} />
 
       {/* 2. 상세 컨텐츠 시트 */}
-      <div className="relative -mt-[32px] bg-white rounded-t-sheet min-h-[600px] z-20 overflow-hidden">
+      <div className="relative -mt-8 bg-white rounded-t-sheet min-h-[600px] z-20 overflow-hidden">
         
         {/* 탭 메뉴 */}
         <div className="pt-2">
@@ -144,7 +144,7 @@ export default function ChallengeDetailPage() {
                 <>
                   {/* A. 나의 출석현황 섹션 */}
                   <div className="flex flex-col items-center mb-8">
-                    <h3 className="text-[18px] font-bold text-text-dark mb-6 text-center w-full">나의 출석현황</h3>
+                    <h3 className="text-lg font-bold text-text-dark mb-6 text-center w-full">나의 출석현황</h3>
                     <AttendanceStatusRow challengeId={id} statusList={detailData.attendance?.myStatus || []} />
                   </div>
 

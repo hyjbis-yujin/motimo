@@ -6,7 +6,8 @@ import { useChallengeStore } from '../../store/useChallengeStore';
 import { useNotificationStore } from '../../store/useNotificationStore';
 
 /**
- * 화면 하단 고정 액션 버튼
+ * 화면 하단 고정 액션 버튼 컴포넌트
+ * 로그인 여부, 참여 상태, 출석 여부에 따라 동적으로 색상과 텍스트가 변경됩니다.
  */
 export default function StickyActionButton({ activeTab, challengeId, challengeTitle, totalDays }) {
   const navigate = useNavigate();
@@ -19,16 +20,12 @@ export default function StickyActionButton({ activeTab, challengeId, challengeTi
   const checkAttendance = useChallengeStore(state => state.checkAttendance);
   const hasCheckedToday = useChallengeStore(state => state.hasCheckedToday);
 
-  // 알림 액션 가져오기
   const addNotification = useNotificationStore(state => state.addNotification);
 
   const isAttendanceTab = activeTab === "출석체크";
   const isJoined = isLoggedIn && joinedChallenges.includes(String(challengeId));
   const checkedToday = isLoggedIn && isJoined && hasCheckedToday(challengeId);
 
-  /**
-   * 버튼 클릭 핸들러
-   */
   const handleAction = () => {
     try {
       if (!isLoggedIn) {
@@ -44,7 +41,6 @@ export default function StickyActionButton({ activeTab, challengeId, challengeTi
           }
           
           checkAttendance(challengeId);
-          // 알림 추가: 출석 완료 (중복 체크 완료 상태이므로 여기서 1회만 호출됨)
           addNotification(
             '출석 체크 완료!', 
             `[${challengeTitle}] 오늘도 한 걸음 성장하셨네요. 꾸준함이 무기입니다!`,
@@ -54,7 +50,6 @@ export default function StickyActionButton({ activeTab, challengeId, challengeTi
         } else {
           if (window.confirm('정말로 이 챌린지에서 탈퇴하시겠습니까?')) {
             leaveChallenge(challengeId);
-            // 알림 추가: 탈퇴 처리
             addNotification(
               '챌린지 탈퇴 처리', 
               `[${challengeTitle}] 탈퇴 처리가 완료되었습니다. 새로운 도전을 기다릴게요.`,
@@ -65,7 +60,6 @@ export default function StickyActionButton({ activeTab, challengeId, challengeTi
         }
       } else {
         joinChallenge(challengeId, totalDays);
-        // 알림 추가: 참여 성공
         addNotification(
           '새로운 시작!', 
           `[${challengeTitle}] 참여 완료! 첫 발걸음을 응원합니다. 화이팅! 💪`,
@@ -79,9 +73,6 @@ export default function StickyActionButton({ activeTab, challengeId, challengeTi
     }
   };
 
-  /**
-   * 버튼 텍스트
-   */
   const getButtonText = () => {
     if (!isLoggedIn) return "참여하기";
     if (isJoined) {
@@ -90,15 +81,12 @@ export default function StickyActionButton({ activeTab, challengeId, challengeTi
     return "참여하기";
   };
 
-  /**
-   * 버튼 배경색
-   */
   const getButtonBgColor = () => {
     if (isJoined) {
       if (isAttendanceTab) {
-        return checkedToday ? "bg-primary-dark opacity-60" : "bg-primary-dark";
+        return checkedToday ? "bg-primary-dark/60" : "bg-primary-dark";
       }
-      return "bg-text-dark opacity-70";
+      return "bg-text-dark/70";
     }
     return "bg-primary-dark";
   };
@@ -106,12 +94,12 @@ export default function StickyActionButton({ activeTab, challengeId, challengeTi
   if (!isLoggedIn && isAttendanceTab) return null;
   
   return (
-    <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-mobile px-layout-x pb-6 bg-white pt-2 z-[9999]">
+    <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-mobile px-layout-x pb-6 bg-white pt-2 z-50">
       <button 
         type="button"
         onClick={handleAction}
         className={cn(
-          "w-full h-[64px] rounded-btn text-white text-[16px] font-medium flex items-center justify-center transition-all active:scale-[0.97]",
+          "w-full h-[64px] rounded-btn text-white text-md font-medium flex items-center justify-center transition-all active:scale-[0.97]",
           getButtonBgColor()
         )}
       >

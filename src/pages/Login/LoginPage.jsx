@@ -17,14 +17,14 @@ export default function LoginPage() {
       <div className="flex flex-col items-center justify-center px-layout-x min-h-[100dvh] pb-10">
         
         {/* 상단 로고 영역 */}
-        <div className="mb-[36px] flex flex-col items-center w-full">
+        <div className="mb-9 flex flex-col items-center w-full">
           <Link to="/" className="mb-8 cursor-pointer">
             <Icon name="header-logo" />
           </Link>
-          <h1 className="text-[20px] font-bold text-text-dark tracking-tight mb-[6px] text-center">
+          <h1 className="text-xl font-bold text-text-dark tracking-tight mb-1.5 text-center">
             오늘의 챌린지를 시작해볼까요?
           </h1>
-          <p className="text-[14px] text-text-secondary font-medium tracking-tight text-center">
+          <p className="text-base text-text-secondary font-medium tracking-tight text-center">
             로그인하고 나만의 일상을 열어가보세요
           </p>
         </div>

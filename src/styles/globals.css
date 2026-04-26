@@ -1,137 +1,100 @@
 @font-face {
   font-family: 'Pretendard';
-  font-weight: 100;
-  font-display: swap;
-  src: url('../assets/fonts/Pretendard-Thin.woff2') format('woff2'),
-    url('../assets/fonts/Pretendard-Thin.woff') format('woff');
-}
-
-@font-face {
-  font-family: 'Pretendard';
-  font-weight: 200;
-  font-display: swap;
-  src: url('../assets/fonts/Pretendard-ExtraLight.woff2') format('woff2'),
-    url('../assets/fonts/Pretendard-ExtraLight.woff') format('woff');
-}
-
-@font-face {
-  font-family: 'Pretendard';
-  font-weight: 300;
-  font-display: swap;
-  src: url('../assets/fonts/Pretendard-Light.woff2') format('woff2'),
-    url('../assets/fonts/Pretendard-Light.woff') format('woff');
-}
-
-@font-face {
-  font-family: 'Pretendard';
   font-weight: 400;
   font-display: swap;
-  src: url('../assets/fonts/Pretendard-Regular.woff2') format('woff2'),
-    url('../assets/fonts/Pretendard-Regular.woff') format('woff');
+  src: url('../assets/fonts/Pretendard-Regular.woff2') format('woff2');
 }
 
 @font-face {
   font-family: 'Pretendard';
   font-weight: 500;
   font-display: swap;
-  src: url('../assets/fonts/Pretendard-Medium.woff2') format('woff2'),
-    url('../assets/fonts/Pretendard-Medium.woff') format('woff');
+  src: url('../assets/fonts/Pretendard-Medium.woff2') format('woff2');
 }
 
 @font-face {
   font-family: 'Pretendard';
   font-weight: 600;
   font-display: swap;
-  src: url('../assets/fonts/Pretendard-SemiBold.woff2') format('woff2'),
-    url('../assets/fonts/Pretendard-SemiBold.woff') format('woff');
+  src: url('../assets/fonts/Pretendard-SemiBold.woff2') format('woff2');
 }
 
 @font-face {
   font-family: 'Pretendard';
   font-weight: 700;
   font-display: swap;
-  src: url('../assets/fonts/Pretendard-Bold.woff2') format('woff2'),
-    url('../assets/fonts/Pretendard-Bold.woff') format('woff');
-}
-
-@font-face {
-  font-family: 'Pretendard';
-  font-weight: 800;
-  font-display: swap;
-  src: url('../assets/fonts/Pretendard-ExtraBold.woff2') format('woff2'),
-    url('../assets/fonts/Pretendard-ExtraBold.woff') format('woff');
-}
-
-@font-face {
-  font-family: 'Pretendard';
-  font-weight: 900;
-  font-display: swap;
-  src: url('../assets/fonts/Pretendard-Black.woff2') format('woff2'),
-    url('../assets/fonts/Pretendard-Black.woff') format('woff');
+  src: url('../assets/fonts/Pretendard-Bold.woff2') format('woff2');
 }
 
 @import "tailwindcss";
 
 @theme {
+  /* 1. Typography */
   --font-sans: 'Pretendard', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  
+  --text-xs: 11px;
+  --text-sm: 12px;
+  --text-base: 14px;
+  --text-md: 16px;
+  --text-lg: 18px;
+  --text-xl: 20px;
+  --text-2xl: 24px;
+  --text-3xl: 26px;
+
+  /* 2. Colors */
   --color-primary-mint: #3db9af;
   --color-primary-dark: #34a198;
   --color-primary-light: #eff8f6;
 
   --color-bg-app: #ffffff;
-  --color-bg-outer: #efefef;
-  --color-bg-subtle: #f8f8f8;
+  --color-bg-subtle: #fcfcfc;
+  --color-bg-gray: #f8f8f8;
+  --color-bg-divider: #fbfbfb;
 
   --color-text-dark: #333333;
   --color-text-secondary: #7e7e7e;
   --color-text-muted: #b8b8b8;
+  --color-text-info: #9c9c9c;
 
   --color-border-light: #efefef;
+  --color-border-divider: #ececec;
+  --color-border-card: #f3f3f3;
+  --color-border-subtle: #eeeeee;
 
   --color-btn-dark: #2f2f31;
 
-  --color-overlay-start: rgba(0, 0, 0, 0.02);
-  --color-overlay-end: rgba(0, 0, 0, 0.72);
-
   --color-tab-inactive: #b6b6b6;
 
-  /* Spacing also applies to max-w, height, padding, gap, etc. */
+  /* 3. Spacing & Layout */
   --spacing-mobile: 460px;
-  --spacing-header: 64px;
-  --spacing-tabbar: 72px;
+  --spacing-header: 60px;
+  --spacing-tabbar: 80px;
   --spacing-layout-x: 18px;
+  
+  --spacing-btn-sm: 36px;
+  --spacing-banner: 100px;
+  --spacing-recommend: 86px;
+  --spacing-pill: 48px;
 
-  --radius-box: 15px;
-  --radius-card: 20px;
-  --radius-pill: 9999px;
-  --radius-btn: 14px;
-  --radius-recommend: 18px;
-  --radius-section: 28px;
+  /* 4. Radius */
+  --radius-box: 16px;
+  --radius-box-lg: 24px;
+  --radius-card: 18px;
+  --radius-btn: 16px;
+  --radius-btn-sm: 10px;
+  --radius-avatar: 22px;
+  --radius-avatar-lg: 28px;
   --radius-sheet: 26px;
+  --radius-banner: 16px;
+  --radius-recommend: 18px;
+  --radius-section: 12px;
+  --radius-pill: 9999px;
 
+  /* 5. Shadows */
   --shadow-tabbar: 0 10px 40px rgba(0, 0, 0, 0.08);
   --shadow-card-light: 0 4px 12px rgba(0, 0, 0, 0.04);
   --shadow-card-subtle: 0 2px 16px rgba(0, 0, 0, 0.03);
-
-  --text-xs-status: 10px;
-  --text-xs-status--line-height: 1.2;
-
-  --text-sm-desc: 12px;
-  --text-sm-desc--line-height: 1.4;
-
-  --text-base-title: 15px;
-  --text-base-title--line-height: 1.4;
-
-  --text-lg-section: 18px;
-  --text-lg-section--line-height: 1.3;
-
-  --text-xl-logo: 26px;
-  --text-xl-logo--line-height: 1.2;
-
-  --font-weight-medium: 500;
-  --font-weight-semibold: 600;
-  --font-weight-bold: 700;
-  --font-weight-extrabold: 800;
+  --shadow-banner: 0 2px 8px rgba(41, 216, 181, 0.15);
 }
 
 @layer base {
@@ -145,7 +108,7 @@
   }
 
   body {
-    @apply m-0 p-0 font-sans antialiased bg-white text-[#202020];
+    @apply m-0 p-0 font-sans antialiased bg-white text-text-dark;
     min-height: 100dvh;
     word-break: keep-all;
     -webkit-font-smoothing: antialiased;
@@ -156,20 +119,11 @@
     min-height: 100dvh;
   }
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  p {
+  h1, h2, h3, h4, h5, h6, p {
     margin: 0;
   }
 
-  button,
-  input,
-  textarea,
-  select {
+  button, input, textarea, select {
     font: inherit;
     color: inherit;
   }
@@ -184,42 +138,32 @@
     text-decoration: none;
   }
 
-  ul,
-  ol {
+  ul, ol {
     margin: 0;
     padding: 0;
     list-style: none;
   }
 
-  img,
-  picture,
-  video {
+  img {
     display: block;
     max-width: 100%;
-  }
-
-  img {
     user-select: none;
     -webkit-user-drag: none;
   }
 }
 
 @layer components {
-
-  /* 네이티브 스크롤바 UI를 완전히 숨기는 유틸리티 */
+  /* 스크롤바 숨기기 유틸리티 */
   .hide-native-scrollbar {
     -ms-overflow-style: none;
-    /* IE and Edge */
     scrollbar-width: none;
-    /* Firefox */
   }
 
   .hide-native-scrollbar::-webkit-scrollbar {
     display: none !important;
-    /* Chrome, Safari, and Opera */
   }
 
-  /* 커서 강제 상속 유틸리티: 카드 등 내부 요소가 드래그 커서를 가리지 않도록 전용 클래스 */
+  /* 드래그 스크롤 핸들링 */
   .drag-scroll-row {
     cursor: grab !important;
   }
