@@ -92,7 +92,7 @@ export default function SearchPage() {
         </div>
       </header>
 
-      <main className="flex-1 px-layout-x py-6">
+      <main className="flex-1 px-layout-x pt-6 pb-12">
         {!isSearching ? (
           /* A. 기본 상태: 최근/추천 검색어 */
           <div className="flex flex-col gap-9 animate-fade-in text-base">
