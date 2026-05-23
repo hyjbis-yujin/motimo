@@ -88,7 +88,7 @@ export default function ChallengeDetailPage() {
     <MobileContainer 
       showHeader={false} 
       showTabBar={false}
-      mainClassName="pt-0 pb-10"
+      mainClassName="pt-0 pb-24"
     >
       {/* 1. 히어로 영역 */}
       <ChallengeHero imageUrl={detailData.heroImage} />

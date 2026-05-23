@@ -1,9 +1,9 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { cn } from '../../../utils/cn';
-import { useAuthStore } from '../../../store/useAuthStore';
-import Button from '../../../components/ui/Button';
-import Avatar from '../../../components/ui/Avatar';
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { cn } from "../../../utils/cn";
+import { useAuthStore } from "../../../store/useAuthStore";
+import Button from "../../../components/ui/Button";
+import Avatar from "../../../components/ui/Avatar";
 
 /**
  * 마이페이지 상단 프로필 섹션
@@ -14,25 +14,20 @@ export default function ProfileSection({ className }) {
   const { isLoggedIn, user, logout } = useAuthStore();
 
   const displayName = isLoggedIn ? user?.name : "로그인이 필요해요";
-  const buttonLabel = isLoggedIn ? '로그아웃' : '시작하기';
-  const handleAction = isLoggedIn ? () => logout() : () => navigate('/login');
+  const buttonLabel = isLoggedIn ? "로그아웃" : "시작하기";
+  const handleAction = isLoggedIn ? () => logout() : () => navigate("/login");
 
   return (
     <section className={cn("flex items-center pt-10 pb-8 px-7 gap-4", className)}>
-
       {/* 1. 프로필 이미지 박스 (메인 스타일 재사용) */}
-      <Avatar
-        isLoggedIn={isLoggedIn}
-        src={user?.profileImage}
-        iconSize={28}
-      />
+      <Avatar isLoggedIn={isLoggedIn} src={user?.profileImage} iconSize={28} />
 
       {/* 2. 닉네임 영역 */}
       <div className="flex flex-col flex-1 min-w-0">
-        <h2 className="text-lg font-bold text-text-dark tracking-tight leading-tight truncate">
+        <h2 className="text-[clamp(15px,3.91vw,18px)] font-bold text-text-dark tracking-tight leading-tight break-keep">
           {displayName}
         </h2>
-        <p className="text-sm text-text-secondary font-medium mt-1 tracking-tight truncate">
+        <p className="text-[clamp(11px,2.6vw,12px)] leading-5 text-text-secondary font-medium mt-1 tracking-tight break-keep">
           {isLoggedIn ? "오늘도 멋진 챌린지를 응원해요!" : "나만의 도전을 시작해보세요"}
         </p>
       </div>

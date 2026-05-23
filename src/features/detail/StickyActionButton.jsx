@@ -48,15 +48,20 @@ export default function StickyActionButton({ activeTab, challengeId, challengeTi
           );
           alert('출석체크가 성실하게 완료되었습니다! 🎉');
         } else {
-          if (window.confirm('정말로 이 챌린지에서 탈퇴하시겠습니까?')) {
-            leaveChallenge(challengeId);
-            addNotification(
-              '챌린지 탈퇴 처리', 
-              `[${challengeTitle}] 탈퇴 처리가 완료되었습니다. 새로운 도전을 기다릴게요.`,
-              'leave'
-            );
-            alert('챌린지 탈퇴가 완료되었습니다.');
-          }
+          // iOS Safari에서 confirm 다이얼로그 호출 시 setTimeout으로 래핑하여
+          // 터치 이벤트 사이클 완료 후 실행되도록 보장
+          setTimeout(() => {
+            const confirmed = window.confirm('정말로 이 챌린지에서 탈퇴하시겠습니까?');
+            if (confirmed) {
+              leaveChallenge(challengeId);
+              addNotification(
+                '챌린지 탈퇴 처리', 
+                `[${challengeTitle}] 탈퇴 처리가 완료되었습니다. 새로운 도전을 기다릴게요.`,
+                'leave'
+              );
+              alert('챌린지 탈퇴가 완료되었습니다.');
+            }
+          }, 100);
         }
       } else {
         joinChallenge(challengeId, totalDays);
